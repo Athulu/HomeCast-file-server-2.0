@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.v1;
+package com.example.homecastfileserver.describegenerator;
 
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
@@ -14,13 +14,6 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator{
     public ChatGPTDescribeGenerator() {
         service = new OpenAiService("token", Duration.ofSeconds(30));
     }
-
-//    public static void main(String[] args) {
-//        ChatGPTDescribeGenerator aaa = new ChatGPTDescribeGenerator();
-//        String bbb = aaa.getDescription(1,1, "Chainsawman");
-//        System.out.println(bbb);
-//
-//    }
 
     @Override
     public String getDescription(int season, int episode, String series) {
@@ -38,5 +31,4 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator{
 
         return stringBuilder.toString();
     }
-
 }

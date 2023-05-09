@@ -1,8 +1,15 @@
+package com.example.homecastfileserver.v1;
+
+import com.example.homecastfileserver.describegenerator.DescribeGenerator;
+import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
+
 public class Main {
     public static void main(String[] args) {
-        ChatGPTDescribeGenerator chatGPT = new ChatGPTDescribeGenerator();
-        JsonFileGenerator jsonFileGenerator = new JsonFileGenerator(chatGPT);
-        jsonFileGenerator.createJsonFile();
-        ThumbnailGenerator.generateThumbnails();
+//        DescribeGenerator describeGenerator = new ChatGPTDescribeGenerator();
+//        DescribeGenerator describeGenerator = new EmptyDescribeGenerator();
+//        JsonFileGenerator jsonFileGenerator = new JsonFileGenerator(describeGenerator);
+//        jsonFileGenerator.createJsonFile();
+        ThumbnailGenerator thumbnailGenerator = new ThumbnailGenerator();
+        thumbnailGenerator.generateThumbnails();
     }
 }

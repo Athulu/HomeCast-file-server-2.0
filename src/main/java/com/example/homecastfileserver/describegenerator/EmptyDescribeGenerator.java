@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.v1;
+package com.example.homecastfileserver.describegenerator;
 
 public class EmptyDescribeGenerator implements DescribeGenerator{
     @Override

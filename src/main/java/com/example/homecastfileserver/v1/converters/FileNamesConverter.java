@@ -1,4 +1,4 @@
-package converters;
+package com.example.homecastfileserver.v1.converters;
 
 import lombok.Getter;
 import lombok.Setter;

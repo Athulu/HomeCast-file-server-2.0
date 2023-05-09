@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.v1;
+package com.example.homecastfileserver.describegenerator;
 
 public interface DescribeGenerator {
     String getDescription(int season, int episode, String series);

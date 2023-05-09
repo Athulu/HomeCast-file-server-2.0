@@ -1,7 +1,9 @@
-import converters.CustomSeriesConverter;
-import converters.DefaultConverter;
-import converters.FileNamesConverter;
-import converters.MovieConverter;
+package com.example.homecastfileserver.v1;
+
+import com.example.homecastfileserver.v1.converters.FileNamesConverter;
+import com.example.homecastfileserver.v1.converters.CustomSeriesConverter;
+import com.example.homecastfileserver.v1.converters.DefaultConverter;
+import com.example.homecastfileserver.v1.converters.MovieConverter;
 
 public class FileNamesConverterFactory {
     public static FileNamesConverter getFileNameConverter(String name) {

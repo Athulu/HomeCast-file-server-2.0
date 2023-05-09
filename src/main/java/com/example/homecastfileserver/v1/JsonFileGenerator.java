@@ -1,4 +1,7 @@
-import converters.FileNamesConverter;
+package com.example.homecastfileserver.v1;
+
+import com.example.homecastfileserver.describegenerator.DescribeGenerator;
+import com.example.homecastfileserver.v1.converters.FileNamesConverter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -16,10 +19,10 @@ public class JsonFileGenerator {
     public static final String DASH_DIRECTORY = "";
     public static final String MOVIES_DIRECTORY = "http://192.168.1.107:8080/mp4/";
     public static final String IMAGES_DIRECTORY = "http://192.168.1.107:8080/images/";
-    private static ChatGPTDescribeGenerator chatGPTDescribeGenerator;
+    private static DescribeGenerator describeGenerator;
 
-    public JsonFileGenerator(ChatGPTDescribeGenerator chatGPTDescribeGenerator) {
-        JsonFileGenerator.chatGPTDescribeGenerator = chatGPTDescribeGenerator;
+    public JsonFileGenerator(DescribeGenerator describeGenerator) {
+        JsonFileGenerator.describeGenerator = describeGenerator;
     }
 
     public void createJsonFile(){
@@ -57,7 +60,7 @@ public class JsonFileGenerator {
             FileNamesConverter converter = FileNamesConverterFactory.getFileNameConverter(name);
             season = Integer.parseInt(converter.getEpisode().substring(1,3));
             episode = Integer.parseInt(converter.getEpisode().substring(4,6));
-            describe = chatGPTDescribeGenerator.getDescription(season,episode,converter.getName());
+            describe = describeGenerator.getDescription(season,episode,converter.getName());
 
             JSONObject jsonVideosString = new JSONObject();
             jsonVideosString.put("subtitle", describe);
