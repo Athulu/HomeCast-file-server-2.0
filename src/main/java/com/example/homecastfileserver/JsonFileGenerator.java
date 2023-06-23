@@ -17,8 +17,8 @@ public class JsonFileGenerator {
     public static final String JSON_DB_FILE = "C:\\HomeCast\\db.json";
     public static final String HLS_DIRECTORY = "";
     public static final String DASH_DIRECTORY = "";
-    public static final String MOVIES_DIRECTORY = "http://192.168.1.107:8080/mp4/";
-    public static final String IMAGES_DIRECTORY = "http://192.168.1.107:8080/images/";
+    public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4\\"; //"http://192.168.1.107:8080/mp4/"
+    public static final String IMAGES_DIRECTORY = "C:\\HomeCast\\images\\"; //"http://192.168.1.107:8080/images/"
     private static DescribeGenerator describeGenerator;
 
     public JsonFileGenerator(DescribeGenerator describeGenerator) {
