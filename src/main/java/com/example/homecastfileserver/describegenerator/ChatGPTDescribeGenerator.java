@@ -12,7 +12,7 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator{
     OpenAiService service;
 
     public ChatGPTDescribeGenerator() {
-        service = new OpenAiService("token", Duration.ofSeconds(30));
+        service = new OpenAiService("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", Duration.ofSeconds(30));
     }
 
     @Override

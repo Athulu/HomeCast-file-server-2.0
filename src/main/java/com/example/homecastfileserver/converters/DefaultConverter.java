@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.v1.converters;
+package com.example.homecastfileserver.converters;
 
 public class DefaultConverter extends FileNamesConverter {
     public DefaultConverter(String name) {

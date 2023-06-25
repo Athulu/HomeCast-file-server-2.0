@@ -1,7 +1,7 @@
-package com.example.homecastfileserver.v1;
+package com.example.homecastfileserver;
 
 import com.example.homecastfileserver.describegenerator.DescribeGenerator;
-import com.example.homecastfileserver.v1.converters.FileNamesConverter;
+import com.example.homecastfileserver.converters.FileNamesConverter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -17,8 +17,8 @@ public class JsonFileGenerator {
     public static final String JSON_DB_FILE = "C:\\HomeCast\\db.json";
     public static final String HLS_DIRECTORY = "";
     public static final String DASH_DIRECTORY = "";
-    public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4\\"; //"http://192.168.1.107:8080/mp4/"
-    public static final String IMAGES_DIRECTORY = "C:\\HomeCast\\images\\"; //"http://192.168.1.107:8080/images/"
+    public static final String MOVIES_DIRECTORY = "http://192.168.1.107:8080/mp4/"; //"http://192.168.1.107:8080/mp4/"
+    public static final String IMAGES_DIRECTORY = "http://192.168.1.107:8080/images/"; //"http://192.168.1.107:8080/images/"
     private static DescribeGenerator describeGenerator;
 
     public JsonFileGenerator(DescribeGenerator describeGenerator) {

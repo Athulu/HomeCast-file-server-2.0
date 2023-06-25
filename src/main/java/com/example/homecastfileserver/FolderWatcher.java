@@ -1,13 +1,19 @@
-package com.example.homecastfileserver.v1;
+package com.example.homecastfileserver;
 
 import com.example.homecastfileserver.describegenerator.ChatGPTDescribeGenerator;
 import com.example.homecastfileserver.describegenerator.DescribeGenerator;
+import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
+import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class FolderWatcher {
+
+    @PostConstruct
     public static void run() throws Exception {
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
         WatchService watchService = FileSystems.getDefault().newWatchService();
@@ -19,7 +25,7 @@ public class FolderWatcher {
         keyMap.put(key, folder); // Dodanie klucza i ścieżki do mapy
 
         ThumbnailGenerator thumbnailGenerator = new ThumbnailGenerator();
-        DescribeGenerator describeGenerator = new ChatGPTDescribeGenerator();
+        DescribeGenerator describeGenerator = new EmptyDescribeGenerator();
         JsonFileGenerator jsonFileGenerator = new JsonFileGenerator(describeGenerator);
 
         while (true) {

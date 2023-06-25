@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.v1.converters;
+package com.example.homecastfileserver.converters;
 
 public class CustomSeriesConverter extends FileNamesConverter{
     public CustomSeriesConverter(String name) {
