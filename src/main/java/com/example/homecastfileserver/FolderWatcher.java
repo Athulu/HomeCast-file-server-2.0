@@ -3,7 +3,8 @@ package com.example.homecastfileserver;
 import com.example.homecastfileserver.describegenerator.ChatGPTDescribeGenerator;
 import com.example.homecastfileserver.describegenerator.DescribeGenerator;
 import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
-import jakarta.annotation.PostConstruct;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.*;
@@ -13,8 +14,8 @@ import java.util.Map;
 @Component
 public class FolderWatcher {
 
-    @PostConstruct
-    public static void run() throws Exception {
+    @EventListener(ContextRefreshedEvent.class)
+    public void run() throws Exception {
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path folder = Paths.get("C:\\HomeCast\\mp4\\");

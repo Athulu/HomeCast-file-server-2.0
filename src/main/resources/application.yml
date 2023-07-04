@@ -1,2 +1,6 @@
 server:
   port: 8080
+spring:
+  banner:
+    location: logo.txt
+    charset: UTF-8

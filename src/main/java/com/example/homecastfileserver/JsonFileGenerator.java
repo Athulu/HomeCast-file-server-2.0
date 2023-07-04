@@ -1,7 +1,9 @@
 package com.example.homecastfileserver;
 
+import com.example.homecastfileserver.converters.DefaultConverter;
 import com.example.homecastfileserver.describegenerator.DescribeGenerator;
 import com.example.homecastfileserver.converters.FileNamesConverter;
+import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -14,11 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonFileGenerator {
+    public static final String HOST_ADRESS = "http://192.168.1.109:8080";
     public static final String JSON_DB_FILE = "C:\\HomeCast\\db.json";
-    public static final String HLS_DIRECTORY = "";
-    public static final String DASH_DIRECTORY = "";
-    public static final String MOVIES_DIRECTORY = "http://192.168.1.107:8080/mp4/"; //"http://192.168.1.107:8080/mp4/"
-    public static final String IMAGES_DIRECTORY = "http://192.168.1.107:8080/images/"; //"http://192.168.1.107:8080/images/"
+    public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4";
     private static DescribeGenerator describeGenerator;
 
     public JsonFileGenerator(DescribeGenerator describeGenerator) {
@@ -32,7 +32,7 @@ public class JsonFileGenerator {
     public static List<String> getAllDirFiles() {
         List<String> fileNames = new ArrayList<>();
         try (DirectoryStream<Path> directoryStream
-                     = Files.newDirectoryStream(Paths.get("C:\\HomeCast\\mp4"))) {
+                     = Files.newDirectoryStream(Paths.get(MOVIES_DIRECTORY))) {
             for (Path path : directoryStream) {
                 fileNames.add(path.getFileName().toString());
             }
@@ -44,10 +44,10 @@ public class JsonFileGenerator {
 
         JSONObject jsonString = new JSONObject();
         jsonString.put("name", "Movies");
-        jsonString.put("hls", HLS_DIRECTORY);
-        jsonString.put("dash", DASH_DIRECTORY);
-        jsonString.put("mp4", MOVIES_DIRECTORY);
-        jsonString.put("images", IMAGES_DIRECTORY);
+        jsonString.put("hls", "");
+        jsonString.put("dash", "");
+        jsonString.put("mp4", HOST_ADRESS+"/mp4/");
+        jsonString.put("images", HOST_ADRESS+"/images/");
 
         JSONObject jsonSourcesString;
         JSONArray jsonVideosArray = new JSONArray();
