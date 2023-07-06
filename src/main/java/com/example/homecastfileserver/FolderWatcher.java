@@ -29,6 +29,10 @@ public class FolderWatcher {
         DescribeGenerator describeGenerator = new EmptyDescribeGenerator();
         JsonFileGenerator jsonFileGenerator = new JsonFileGenerator(describeGenerator);
 
+        thumbnailGenerator.generateThumbnails();
+        jsonFileGenerator.initializeCheckOfChanges();
+
+
         while (true) {
             // Oczekujemy na zdarzenia w WatchService
             key = watchService.take();

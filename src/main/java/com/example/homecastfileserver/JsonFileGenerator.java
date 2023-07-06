@@ -29,7 +29,37 @@ public class JsonFileGenerator {
         createJsonFileFromString(generateJsonString());
     }
 
-    public static List<String> getAllDirFiles() {
+    public void initializeCheckOfChanges(){
+        int hashcode = getAllDirFiles().hashCode();
+        if(isDirectoryDifferent(hashcode)){
+            try{
+                PrintWriter zapis = new PrintWriter("hashcode.txt");
+                zapis.println(hashcode);
+                zapis.close();
+            }catch(FileNotFoundException e){
+                System.out.println(e);
+            }
+            createJsonFile();
+        }
+    }
+    private boolean isDirectoryDifferent(int hashcode) {
+        String text;
+
+        try{
+            BufferedReader brTest = new BufferedReader(new FileReader("hashcode.txt"));
+            text = brTest.readLine();
+        }catch(Exception e){
+            System.err.println("BufferedReader error");
+            text = "1";
+        }
+
+        if(Integer.parseInt(text) != hashcode)
+            return true;
+
+        return false;
+    }
+
+    private static List<String> getAllDirFiles() {
         List<String> fileNames = new ArrayList<>();
         try (DirectoryStream<Path> directoryStream
                      = Files.newDirectoryStream(Paths.get(MOVIES_DIRECTORY))) {
@@ -40,7 +70,7 @@ public class JsonFileGenerator {
         return fileNames;
     }
 
-    public String generateJsonString() {
+    private String generateJsonString() {
 
         JSONObject jsonString = new JSONObject();
         jsonString.put("name", "Movies");
@@ -93,7 +123,7 @@ public class JsonFileGenerator {
     }
 
 
-    public void createJsonFileFromString(String formattedJsonString) {
+    private void createJsonFileFromString(String formattedJsonString) {
         try {
             FileWriter myWriter = new FileWriter(JSON_DB_FILE);
             myWriter.write(formattedJsonString);
