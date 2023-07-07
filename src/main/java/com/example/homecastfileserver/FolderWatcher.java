@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Component
 public class FolderWatcher {
@@ -32,6 +34,7 @@ public class FolderWatcher {
         thumbnailGenerator.generateThumbnails();
         jsonFileGenerator.initializeCheckOfChanges();
 
+        Set<Path> setOfPaths = new HashSet<>();
 
         while (true) {
             // Oczekujemy na zdarzenia w WatchService
@@ -52,14 +55,13 @@ public class FolderWatcher {
 
                     // Sprawdzamy, czy rozmiar pliku się nie zmienia przez określony czas
                     long fileSize = Files.size(createdFile);
-                    Thread.sleep(2000); // Oczekujemy przez 1 sekundę
+                    Thread.sleep(2000);
                     long newFileSize = Files.size(createdFile);
 
                     if (fileSize == newFileSize) {
                         System.out.println("Plik w całości przeniesiony: " + createdFile.toString());
                         Path path = Paths.get("C:\\HomeCast\\mp4\\" + event.context().toString());
-                        thumbnailGenerator.generateThumbnail(path);
-                        jsonFileGenerator.createJsonFile();
+                        setOfPaths.add(path);
                     } else {
                         System.out.println("Plik nie został w całości przeniesiony: " + createdFile.toString());
                     }
@@ -70,6 +72,12 @@ public class FolderWatcher {
                     System.out.println("Zmodyfikowano plik: " + event.context().toString());
                 }
             }
+
+            for (Path path : setOfPaths) {
+                thumbnailGenerator.generateThumbnail(path);
+            }
+
+            jsonFileGenerator.createJsonFile();
 
             // Resetujemy klucz i kontynuujemy nasłuchiwanie
             boolean valid = key.reset();
