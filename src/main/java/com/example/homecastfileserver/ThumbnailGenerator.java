@@ -40,7 +40,8 @@ public class ThumbnailGenerator {
             ImageIO.write(bufferedImage, "png", new File(
                     MAIN_DIRECTORY + "images\\" + path.getFileName().toString().replace(".mp4", "") + "480x270.png"));
         } catch (Exception e1) {
-            e1.printStackTrace();
+//            e1.printStackTrace();
+            System.out.println(e1);
         }
     }
 

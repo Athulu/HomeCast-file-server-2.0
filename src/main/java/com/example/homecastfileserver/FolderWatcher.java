@@ -44,6 +44,7 @@ public class FolderWatcher {
             // Przetwarzamy zdarzenia dla zarejestrowanego folderu
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind<?> kind = event.kind();
+                Path path = Paths.get("C:\\HomeCast\\mp4\\" + event.context().toString());
                 if (kind == StandardWatchEventKinds.OVERFLOW) {
                     continue;
                 }
@@ -60,7 +61,6 @@ public class FolderWatcher {
 
                     if (fileSize == newFileSize) {
                         System.out.println("Plik w całości przeniesiony: " + createdFile.toString());
-                        Path path = Paths.get("C:\\HomeCast\\mp4\\" + event.context().toString());
                         setOfPaths.add(path);
                     } else {
                         System.out.println("Plik nie został w całości przeniesiony: " + createdFile.toString());
@@ -73,11 +73,13 @@ public class FolderWatcher {
                 }
             }
 
-            for (Path path : setOfPaths) {
-                thumbnailGenerator.generateThumbnail(path);
+            if(setOfPaths.size()!=0){
+                for (Path path : setOfPaths) {
+                    thumbnailGenerator.generateThumbnail(path);
+                }
+                jsonFileGenerator.createJsonFile();
+                setOfPaths.clear();
             }
-
-            jsonFileGenerator.createJsonFile();
 
             // Resetujemy klucz i kontynuujemy nasłuchiwanie
             boolean valid = key.reset();

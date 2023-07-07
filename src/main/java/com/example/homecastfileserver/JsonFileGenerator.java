@@ -21,6 +21,11 @@ public class JsonFileGenerator {
     public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4";
     private static DescribeGenerator describeGenerator;
 
+    public static void main(String[] args) {
+        JsonFileGenerator aaa = new JsonFileGenerator(new EmptyDescribeGenerator());
+        aaa.createJsonFile();
+    }
+
     public JsonFileGenerator(DescribeGenerator describeGenerator) {
         JsonFileGenerator.describeGenerator = describeGenerator;
     }
@@ -88,9 +93,11 @@ public class JsonFileGenerator {
 
         for (String name: getAllDirFiles()) {
             FileNamesConverter converter = FileNamesConverterFactory.getFileNameConverter(name);
-            season = Integer.parseInt(converter.getEpisode().substring(1,3));
-            episode = Integer.parseInt(converter.getEpisode().substring(4,6));
-            describe = describeGenerator.getDescription(season,episode,converter.getName());
+//            season = Integer.parseInt(converter.getEpisode().substring(1,3));
+//            episode = Integer.parseInt(converter.getEpisode().substring(4,6));
+//            describe = describeGenerator.getDescription(season,episode,converter.getName());
+
+            describe = describeGenerator.getDescription(converter);
 
             JSONObject jsonVideosString = new JSONObject();
             jsonVideosString.put("subtitle", describe);
