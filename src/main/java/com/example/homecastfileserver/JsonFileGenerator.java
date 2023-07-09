@@ -1,6 +1,5 @@
 package com.example.homecastfileserver;
 
-import com.example.homecastfileserver.converters.DefaultConverter;
 import com.example.homecastfileserver.describegenerator.DescribeGenerator;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
@@ -86,21 +85,15 @@ public class JsonFileGenerator {
 
         JSONObject jsonSourcesString;
         JSONArray jsonVideosArray = new JSONArray();
-
-        int season;
-        int episode;
-        String describe;
+        String description;
 
         for (String name: getAllDirFiles()) {
             FileNamesConverter converter = FileNamesConverterFactory.getFileNameConverter(name);
-//            season = Integer.parseInt(converter.getEpisode().substring(1,3));
-//            episode = Integer.parseInt(converter.getEpisode().substring(4,6));
-//            describe = describeGenerator.getDescription(season,episode,converter.getName());
 
-            describe = describeGenerator.getDescription(converter);
+            description = describeGenerator.getDescription(converter);
 
             JSONObject jsonVideosString = new JSONObject();
-            jsonVideosString.put("subtitle", describe);
+            jsonVideosString.put("subtitle", description);
             JSONArray jsonSourcesArray = new JSONArray();
             jsonSourcesString = new JSONObject();
             jsonSourcesString.put("type", "mp4");
@@ -135,9 +128,9 @@ public class JsonFileGenerator {
             FileWriter myWriter = new FileWriter(JSON_DB_FILE);
             myWriter.write(formattedJsonString);
             myWriter.close();
-            System.out.println(">>> Successfully wrote to the file.");
+            System.out.println("db.json został utworzony");
         } catch (IOException e) {
-            System.out.println("*** An error occurred.");
+            System.out.println("Błąd w tworzeniu pliku db.json");
             e.printStackTrace();
         }
     }
