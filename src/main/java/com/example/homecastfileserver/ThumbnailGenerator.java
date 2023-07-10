@@ -8,14 +8,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.imageio.ImageIO;
+
+import lombok.NoArgsConstructor;
 import org.imgscalr.Scalr;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
+import org.springframework.stereotype.Component;
 
+@Component
+@NoArgsConstructor
 public class ThumbnailGenerator {
     public static final String MAIN_DIRECTORY = "C:\\HomeCast\\";
     private static final int frameNumber = 100;
+
     public void generateThumbnails() {
 
         DirectoryStream.Filter<Path> filter = file -> {
@@ -30,7 +36,7 @@ public class ThumbnailGenerator {
         }
     }
 
-    public void generateThumbnail(Path path){
+    public void generateThumbnail(Path path) {
         try {
             waitForFileAvailability(path);
             Picture picture = FrameGrab.getFrameFromFile(
@@ -45,15 +51,14 @@ public class ThumbnailGenerator {
         }
     }
 
-    public void waitForFileAvailability(Path path){
+    public void waitForFileAvailability(Path path) {
         try {
             File file = new File(path.toString());
             while (!file.canRead()) {
                 System.out.println("Plik jest już używany przez inny proces");
                 Thread.sleep(1000);
             }
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

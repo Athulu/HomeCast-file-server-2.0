@@ -1,14 +1,1 @@
-com\example\homecastfileserver\converters\FileNamesConverter.class
-com\example\homecastfileserver\StreamingController.class
-com\example\homecastfileserver\converters\DefaultConverter.class
-com\example\homecastfileserver\StreamingService.class
-com\example\homecastfileserver\converters\MovieConverter.class
-com\example\homecastfileserver\JsonFileGenerator.class
-com\example\homecastfileserver\describegenerator\ChatGPTDescribeGenerator.class
 com\example\homecastfileserver\Application.class
-com\example\homecastfileserver\describegenerator\EmptyDescribeGenerator.class
-com\example\homecastfileserver\FileNamesConverterFactory.class
-com\example\homecastfileserver\describegenerator\DescribeGenerator.class
-com\example\homecastfileserver\ThumbnailGenerator.class
-com\example\homecastfileserver\FolderWatcher.class
-com\example\homecastfileserver\converters\CustomSeriesConverter.class

@@ -4,3 +4,5 @@ spring:
   banner:
     location: logo.txt
     charset: UTF-8
+chatgpt:
+  token: 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

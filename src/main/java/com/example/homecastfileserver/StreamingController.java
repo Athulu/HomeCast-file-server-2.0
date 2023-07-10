@@ -1,6 +1,7 @@
 package com.example.homecastfileserver;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,11 @@ import static com.example.homecastfileserver.JsonFileGenerator.JSON_DB_FILE;
 @RequestMapping("/")
 @AllArgsConstructor
 public class StreamingController {
-    private StreamingService streamingService;
+    private final StreamingService streamingService;
 
     @GetMapping("/images/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-        Resource fileResource = new FileSystemResource("images/" + filename);
+        Resource fileResource = new FileSystemResource("C:\\HomeCast\\images\\" + filename);
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=\"" + fileResource.getFilename() + "\"")
                 .body(fileResource);
@@ -32,7 +33,7 @@ public class StreamingController {
 
     @GetMapping("/mp4/{filename}")
     public ResponseEntity<Resource> streamVideo(@PathVariable String filename) {
-        Resource video = streamingService.getVideoResource(filename);
+        Resource video = streamingService.getVideoResource("C:\\HomeCast\\mp4\\" + filename);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("video/mp4"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + video.getFilename() + "\"")

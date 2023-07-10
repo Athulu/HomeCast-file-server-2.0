@@ -1,25 +1,32 @@
 package com.example.homecastfileserver.describegenerator;
 
+import com.example.homecastfileserver.configs.MyConfig;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
 import java.time.Duration;
 import java.util.List;
 
-
-public class ChatGPTDescribeGenerator implements DescribeGenerator{
+@Component
+public class ChatGPTDescribeGenerator implements DescribeGenerator {
     OpenAiService service;
+    MyConfig myConfig;
 
-    public ChatGPTDescribeGenerator() {
-        service = new OpenAiService("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", Duration.ofSeconds(30));
+    public ChatGPTDescribeGenerator(MyConfig myConfig) {
+        service = new OpenAiService(myConfig.getToken(), Duration.ofSeconds(30));
+        this.myConfig = myConfig;
     }
 
     @Override
     public String getDescription(FileNamesConverter converter) {
-        int season = Integer.parseInt(converter.getEpisode().substring(1,3));
-        int episode = Integer.parseInt(converter.getEpisode().substring(4,6));
+        String season = converter.getEpisode().substring(1, 3);
+        String episode = converter.getEpisode().substring(4, 6);
         String series = converter.getName();
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
                 .messages(List.of(new ChatMessage("user", "Krótki opis odcinka numer " + episode + " z sezonu numer " + season + " \"" + series + "\" nie zdradzający fabuły")))

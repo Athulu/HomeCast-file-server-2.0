@@ -1,6 +1,6 @@
 package com.example.homecastfileserver.converters;
 
-public class CustomSeriesConverter extends FileNamesConverter{
+public class CustomSeriesConverter extends FileNamesConverter {
     public CustomSeriesConverter(String name) {
         this.fileName = name;
         this.splittedFileName = name.split("\\.");
