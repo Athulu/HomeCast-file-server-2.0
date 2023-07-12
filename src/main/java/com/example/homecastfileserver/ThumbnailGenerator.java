@@ -39,8 +39,7 @@ public class ThumbnailGenerator {
     public void generateThumbnail(Path path) {
         try {
             waitForFileAvailability(path);
-            Picture picture = FrameGrab.getFrameFromFile(
-                    new File(path.toString()), frameNumber);
+            Picture picture = FrameGrab.getFrameFromFile(new File(path.toString()), frameNumber);
             BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
             bufferedImage = Scalr.resize(bufferedImage, 480);
             ImageIO.write(bufferedImage, "png", new File(

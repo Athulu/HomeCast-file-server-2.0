@@ -15,7 +15,7 @@ public class StreamingService {
 
     public Resource getVideoResource(String filename) {
         try {
-            Path filePath = Paths.get("mp4/" + filename);
+            Path filePath = Paths.get(filename);
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;

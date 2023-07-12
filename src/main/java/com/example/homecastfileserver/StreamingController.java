@@ -33,7 +33,8 @@ public class StreamingController {
 
     @GetMapping("/mp4/{filename}")
     public ResponseEntity<Resource> streamVideo(@PathVariable String filename) {
-        Resource video = streamingService.getVideoResource("C:\\HomeCast\\mp4\\" + filename);
+        filename = "C:\\HomeCast\\mp4\\" + filename;
+        Resource video = streamingService.getVideoResource(filename);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType("video/mp4"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + video.getFilename() + "\"")
