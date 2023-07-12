@@ -32,8 +32,8 @@ public class FolderWatcher {
         WatchKey key = folder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
 
-        Map<WatchKey, Path> keyMap = new HashMap<>(); // Mapa przechowująca klucze i odpowiadające im ścieżki
-        keyMap.put(key, folder); // Dodanie klucza i ścieżki do mapy
+        Map<WatchKey, Path> keyMap = new HashMap<>();
+        keyMap.put(key, folder);
 
         thumbnailGenerator.generateThumbnails();
         jsonFileGenerator.initializeCheckOfChanges();
