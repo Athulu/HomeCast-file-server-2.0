@@ -1,8 +1,7 @@
-package com.example.homecastfileserver;
+package com.example.homecastfileserver.generators;
 
-import com.example.homecastfileserver.describegenerator.DescribeGenerator;
+import com.example.homecastfileserver.generators.describegenerator.DescribeGenerator;
 import com.example.homecastfileserver.converters.FileNamesConverter;
-import com.example.homecastfileserver.describegenerator.EmptyDescribeGenerator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated //teraz przejmie to klasa VideosService
 @Component
 public class JsonFileGenerator {
     public static final String HOST_ADRESS = "http://192.168.1.109:8080";

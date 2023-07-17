@@ -1,4 +1,4 @@
-package com.example.homecastfileserver.describegenerator;
+package com.example.homecastfileserver.generators.describegenerator;
 
 import com.example.homecastfileserver.configs.MyConfig;
 import com.example.homecastfileserver.converters.FileNamesConverter;
@@ -6,8 +6,6 @@ import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;

@@ -1,4 +1,4 @@
-package com.example.homecastfileserver;
+package com.example.homecastfileserver.services;
 
 import lombok.NoArgsConstructor;
 import org.springframework.core.io.Resource;

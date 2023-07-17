@@ -1,7 +1,7 @@
-package com.example.homecastfileserver;
+package com.example.homecastfileserver.controllers;
 
+import com.example.homecastfileserver.services.StreamingService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.example.homecastfileserver.JsonFileGenerator.JSON_DB_FILE;
+import static com.example.homecastfileserver.generators.JsonFileGenerator.JSON_DB_FILE;
 
 @Controller
 @RequestMapping("/")

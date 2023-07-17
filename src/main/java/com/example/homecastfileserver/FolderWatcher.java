@@ -1,9 +1,7 @@
 package com.example.homecastfileserver;
 
-import com.example.homecastfileserver.configs.MyConfig;
-import com.example.homecastfileserver.describegenerator.ChatGPTDescribeGenerator;
-import com.example.homecastfileserver.describegenerator.DescribeGenerator;
-import lombok.AllArgsConstructor;
+import com.example.homecastfileserver.generators.JsonFileGenerator;
+import com.example.homecastfileserver.generators.ThumbnailGenerator;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -41,11 +39,9 @@ public class FolderWatcher {
         Set<Path> setOfPaths = new HashSet<>();
 
         while (true) {
-            // Oczekujemy na zdarzenia w WatchService
             key = watchService.take();
             Path dir = keyMap.get(key);
 
-            // Przetwarzamy zdarzenia dla zarejestrowanego folderu
             for (WatchEvent<?> event : key.pollEvents()) {
                 WatchEvent.Kind<?> kind = event.kind();
                 Path path = Paths.get("C:\\HomeCast\\mp4\\" + event.context().toString());
@@ -53,7 +49,6 @@ public class FolderWatcher {
                     continue;
                 }
 
-                // Wykonujemy odpowiednie akcje w zależności od rodzaju zdarzenia
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
                     Path createdFile = dir.resolve((Path) event.context());
                     System.out.println("Nowy plik: " + createdFile);
@@ -85,7 +80,6 @@ public class FolderWatcher {
                 setOfPaths.clear();
             }
 
-            // Resetujemy klucz i kontynuujemy nasłuchiwanie
             boolean valid = key.reset();
             if (!valid) {
                 keyMap.remove(key);
@@ -95,6 +89,5 @@ public class FolderWatcher {
             }
         }
     }
-
 }
 
