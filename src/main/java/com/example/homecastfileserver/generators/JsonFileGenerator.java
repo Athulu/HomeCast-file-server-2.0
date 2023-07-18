@@ -15,7 +15,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated //teraz przejmie to klasa VideosService
+import static com.example.homecastfileserver.generators.VideoObjectGenerator.getStrings;
+
+@Deprecated //teraz przejmie to klasa VideoObjectGenerator
 @Component
 public class JsonFileGenerator {
     public static final String HOST_ADRESS = "http://192.168.1.109:8080";
@@ -64,15 +66,7 @@ public class JsonFileGenerator {
     }
 
     private static List<String> getAllDirFiles() {
-        List<String> fileNames = new ArrayList<>();
-        try (DirectoryStream<Path> directoryStream
-                     = Files.newDirectoryStream(Paths.get(MOVIES_DIRECTORY))) {
-            for (Path path : directoryStream) {
-                fileNames.add(path.getFileName().toString());
-            }
-        } catch (IOException ex) {
-        }
-        return fileNames;
+        return getStrings(MOVIES_DIRECTORY);
     }
 
     private String generateJsonString() {

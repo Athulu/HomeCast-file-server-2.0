@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,11 +25,17 @@ public class Video {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sourceID", unique = true)
     private Source source;
+    private int hashcode;
 
-//    "sources": [{
-//        "mime": "videos/mp4",
-//        "type": "mp4",
-//        "url": "Jujutsu Kaisen - Odcinek 1.mp4"
-//    }],
-
+    public Video(String episode, String title, String subtitle, String thumb, String image480x270, String image780x1200, Integer duration, Source source, Integer hashcode) {
+        this.episode = episode;
+        this.title = title;
+        this.subtitle = subtitle;
+        this.thumb = thumb;
+        this.image480x270 = image480x270;
+        this.image780x1200 = image780x1200;
+        this.duration = duration;
+        this.source = source;
+        this.hashcode = hashcode;
+    }
 }

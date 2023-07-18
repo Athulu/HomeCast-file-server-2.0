@@ -17,9 +17,12 @@ public interface VideosMapper {
     default HashMap<String, String> getSource(Source source) {
         if(source == null) return null;
         HashMap<String, String> map = new HashMap<>();
+
+        //TODO: To w takiej formie nie może pozostać
         map.put("mime", source.getMime());
         map.put("type", source.getType());
-        map.put("url", source.getType());
+        map.put("url", source.getUrl());
+
         return map;
     }
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "sources")
-//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,4 +17,10 @@ public class Source {
     private String url;
     @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
     private Video video;
+
+    public Source(String mime, String type, String url) {
+        this.mime = mime;
+        this.type = type;
+        this.url = url;
+    }
 }

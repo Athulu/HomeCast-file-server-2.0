@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface VideosRepository extends CrudRepository<Video, Long> {
     Video findByVideoID(Long videoID);
+    Video findByHashcode(int hashcode);
     List<Video> findAllBy();
 }
