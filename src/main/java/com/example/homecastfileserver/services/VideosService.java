@@ -24,7 +24,7 @@ public class VideosService {
     }
 
     public List<Integer> getVideosHashcodes(){
-        return getListOfVideos().stream().map(VideoDTO::hashCode).collect(Collectors.toList());
+        return videosRepository.findAllBy().stream().map(video -> video.getHashcode()).collect(Collectors.toList());
     }
 
     public Video getVideoByHashcode(int hashcode){
@@ -33,7 +33,7 @@ public class VideosService {
 
     @Transactional
     public void remove(Video video){
-        entityManager.remove(video);
+        entityManager.remove(entityManager.merge(video));
     }
 
     @Transactional

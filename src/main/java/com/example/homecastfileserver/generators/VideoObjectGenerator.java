@@ -8,7 +8,7 @@ import com.example.homecastfileserver.services.VideosService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class VideoObjectGenerator {
     public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4";
+    public static final String HASHCODE_FILE = "C:\\HomeCast\\hashcode.txt";
     private final DescribeGenerator describeGenerator;
     private final VideosService videosService;
 
@@ -30,27 +31,29 @@ public class VideoObjectGenerator {
     }
 
     public void updateDirectoryContent(){
-        List<Integer> videosHashcodes = videosService.getVideosHashcodes();
-        List<Integer> directoryHashcodes = getAllDirFiles().stream().map(String::hashCode).toList();
-        List<Integer> tempDirectoryHashcodes = new LinkedList<>(directoryHashcodes);
-        tempDirectoryHashcodes.removeAll(videosHashcodes);
-        List<String> videoFileNames = getAllDirFiles();
+        List<String> videoFileNames = getAllDirFiles(); //nazwy plikow
+        List<Integer> videosHashcodes = videosService.getVideosHashcodes(); //hashcody z bazy danych
+        List<Integer> directoryHashcodes = videoFileNames.stream().map(String::hashCode).toList(); //hashcody z folderu
 
-        for (String fileName: videoFileNames)
-            if(videosHashcodes.contains(fileName.hashCode()))
-                videoFileNames.remove(fileName);
+//        for (String fileName: videoFileNames){
+//            if(videosHashcodes.contains(fileName.hashCode())){
+//                videoFileNames.remove(fileName);
+//            }
+//        }
 
-        //TODO: przypisać do zmiennej i wrzucić do bazy danych
-        for (Video video: createVideoObjectsFromFileNames(videoFileNames)) {
-            videosService.save(video);
+        for(int i = 0; i < videoFileNames.size(); i++){
+            if(videosHashcodes.contains(videoFileNames.get(i).hashCode())){
+                videoFileNames.remove(videoFileNames.get(i));
+            }
         }
+
+        for (Video video: createVideoObjectsFromFileNames(videoFileNames))
+            videosService.save(video);
 
         //usuwanie zawartości z bazy danych, której już nie ma w folderze
-        videosHashcodes.retainAll(directoryHashcodes);
-        for (int hashcode: videosHashcodes) {
-            videosService.remove(videosService.getVideoByHashcode(hashcode));
-        }
-
+//        videosHashcodes.retainAll(directoryHashcodes);
+//        for (int hashcode: videosHashcodes)
+//            videosService.remove(videosService.getVideoByHashcode(hashcode));
     }
 
     private List<Video> createVideoObjectsFromFileNames(List<String> videoFileNames){
@@ -78,6 +81,37 @@ public class VideoObjectGenerator {
 
     private static List<String> getAllDirFiles() {
         return getStrings(MOVIES_DIRECTORY);
+    }
+
+    public void initializeCheckOfChanges() {
+        int hashcode = getAllDirFiles().hashCode();
+        if (isDirectoryDifferent(hashcode)) {
+            try {
+                PrintWriter zapis = new PrintWriter("hashcode.txt");
+                zapis.println(hashcode);
+                zapis.close();
+            } catch (FileNotFoundException e) {
+                System.out.println(e);
+            }
+            updateDirectoryContent();
+        }
+    }
+
+    private boolean isDirectoryDifferent(int hashcode) {
+        String text;
+
+        try {
+            BufferedReader brTest = new BufferedReader(new FileReader(HASHCODE_FILE));
+            text = brTest.readLine();
+        } catch (Exception e) {
+            System.err.println("BufferedReader error");
+            text = "1";
+        }
+
+        if (Integer.parseInt(text) != hashcode)
+            return true;
+
+        return false;
     }
 
     @NotNull
