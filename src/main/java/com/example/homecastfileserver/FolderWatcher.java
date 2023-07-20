@@ -1,6 +1,5 @@
 package com.example.homecastfileserver;
 
-import com.example.homecastfileserver.generators.JsonFileGenerator;
 import com.example.homecastfileserver.generators.ThumbnailGenerator;
 import com.example.homecastfileserver.generators.VideoObjectGenerator;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -16,12 +15,10 @@ import java.util.Set;
 @Component
 public class FolderWatcher {
     private final ThumbnailGenerator thumbnailGenerator;
-    private final JsonFileGenerator jsonFileGenerator;
     private final VideoObjectGenerator videoObjectGenerator;
 
-    public FolderWatcher(ThumbnailGenerator thumbnailGenerator, JsonFileGenerator jsonFileGenerator, VideoObjectGenerator videoObjectGenerator) {
+    public FolderWatcher(ThumbnailGenerator thumbnailGenerator, VideoObjectGenerator videoObjectGenerator) {
         this.thumbnailGenerator = thumbnailGenerator;
-        this.jsonFileGenerator = jsonFileGenerator;
         this.videoObjectGenerator = videoObjectGenerator;
     }
 
@@ -37,8 +34,6 @@ public class FolderWatcher {
         keyMap.put(key, folder);
 
         thumbnailGenerator.generateThumbnails();
-//        jsonFileGenerator.initializeCheckOfChanges();
-
 
         Set<Path> setOfPaths = new HashSet<>();
 
@@ -80,7 +75,6 @@ public class FolderWatcher {
                 for (Path path : setOfPaths) {
                     thumbnailGenerator.generateThumbnail(path);
                 }
-                videoObjectGenerator.updateDirectoryContent();
                 setOfPaths.clear();
             }
 

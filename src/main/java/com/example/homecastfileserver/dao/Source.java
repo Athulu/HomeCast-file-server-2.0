@@ -15,7 +15,7 @@ public class Source {
     private String mime;
     private String type;
     private String url;
-    @OneToOne(mappedBy = "source", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "sources", cascade = CascadeType.ALL)
     private Video video;
 
     public Source(String mime, String type, String url) {

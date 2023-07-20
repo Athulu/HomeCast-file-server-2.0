@@ -1,13 +1,14 @@
 package com.example.homecastfileserver.dto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class VideoDTO {
     private String episode;
     private String title;
@@ -16,5 +17,5 @@ public class VideoDTO {
     private String image480x270;
     private String image780x1200;
     private Integer duration;
-    private HashMap<String, String> source;
+    private List<HashMap<String, String>> sources;
 }

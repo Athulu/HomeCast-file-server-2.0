@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.example.homecastfileserver.generators.JsonFileGenerator.JSON_DB_FILE;
 
 @Controller
 @RequestMapping("/")
@@ -39,14 +38,5 @@ public class StreamingController {
                 .contentType(MediaType.parseMediaType("video/mp4"))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + video.getFilename() + "\"")
                 .body(video);
-    }
-
-    @GetMapping("/db.json")
-    public ResponseEntity<byte[]> showFile() throws IOException {
-        Path path = Paths.get(JSON_DB_FILE);
-        byte[] fileContent = Files.readAllBytes(path);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_PLAIN);
-        return new ResponseEntity<>(fileContent, headers, HttpStatus.OK);
     }
 }

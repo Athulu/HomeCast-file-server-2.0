@@ -2,6 +2,7 @@ package com.example.homecastfileserver.controllers;
 
 
 import com.example.homecastfileserver.dao.Video;
+import com.example.homecastfileserver.dto.UltimateDTO;
 import com.example.homecastfileserver.dto.VideoDTO;
 import com.example.homecastfileserver.services.VideosService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ import java.util.List;
 public class VideosController {
     private final VideosService videosService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<VideoDTO>> getVideos() {
+    @GetMapping("/videos")
+    public ResponseEntity<UltimateDTO> getVideos() {
         return ResponseEntity.ok().body(videosService.getListOfVideos());
     }
 }

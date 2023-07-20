@@ -24,10 +24,10 @@ public class Video {
     private Integer duration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "sourceID", unique = true)
-    private Source source;
+    private Source sources;
     private int hashcode;
 
-    public Video(String episode, String title, String subtitle, String thumb, String image480x270, String image780x1200, Integer duration, Source source, Integer hashcode) {
+    public Video(String episode, String title, String subtitle, String thumb, String image480x270, String image780x1200, Integer duration, Source sources, Integer hashcode) {
         this.episode = episode;
         this.title = title;
         this.subtitle = subtitle;
@@ -35,7 +35,7 @@ public class Video {
         this.image480x270 = image480x270;
         this.image780x1200 = image780x1200;
         this.duration = duration;
-        this.source = source;
+        this.sources = sources;
         this.hashcode = hashcode;
     }
 }
