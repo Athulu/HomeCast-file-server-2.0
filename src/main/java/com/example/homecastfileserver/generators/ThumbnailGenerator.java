@@ -1,4 +1,4 @@
-package com.example.homecastfileserver;
+package com.example.homecastfileserver.generators;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

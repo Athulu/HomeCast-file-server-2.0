@@ -1,4 +1,4 @@
-package com.example.homecastfileserver;
+package com.example.homecastfileserver.generators;
 
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.example.homecastfileserver.converters.CustomSeriesConverter;
