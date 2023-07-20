@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,11 @@ public class VideosService {
 
     @Transactional
     public void remove(Video video){
-        entityManager.remove(entityManager.merge(video));
+        Optional<Video> videosByHashcode = Optional.ofNullable(videosRepository.findByHashcode(video.getHashcode()));
+        if (videosByHashcode.isPresent()) {
+            Video vid = videosByHashcode.get();
+            entityManager.remove(vid);
+        }
     }
 
     @Transactional

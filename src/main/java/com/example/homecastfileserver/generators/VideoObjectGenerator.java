@@ -40,20 +40,21 @@ public class VideoObjectGenerator {
 //                videoFileNames.remove(fileName);
 //            }
 //        }
+        List<String> toSaveList = new LinkedList<>();
 
         for(int i = 0; i < videoFileNames.size(); i++){
-            if(videosHashcodes.contains(videoFileNames.get(i).hashCode())){
-                videoFileNames.remove(videoFileNames.get(i));
+            if(!videosHashcodes.contains(videoFileNames.get(i).hashCode())){
+                toSaveList.add(videoFileNames.get(i));
             }
         }
 
-        for (Video video: createVideoObjectsFromFileNames(videoFileNames))
+        for (Video video: createVideoObjectsFromFileNames(toSaveList))
             videosService.save(video);
 
         //usuwanie zawartości z bazy danych, której już nie ma w folderze
-//        videosHashcodes.retainAll(directoryHashcodes);
-//        for (int hashcode: videosHashcodes)
-//            videosService.remove(videosService.getVideoByHashcode(hashcode));
+        videosHashcodes.removeAll(directoryHashcodes);
+        for (int hashcode: videosHashcodes)
+            videosService.remove(videosService.getVideoByHashcode(hashcode));
     }
 
     private List<Video> createVideoObjectsFromFileNames(List<String> videoFileNames){

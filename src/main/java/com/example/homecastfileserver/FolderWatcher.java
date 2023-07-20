@@ -38,7 +38,7 @@ public class FolderWatcher {
 
         thumbnailGenerator.generateThumbnails();
 //        jsonFileGenerator.initializeCheckOfChanges();
-        videoObjectGenerator.initializeCheckOfChanges();
+
 
         Set<Path> setOfPaths = new HashSet<>();
 
@@ -83,6 +83,8 @@ public class FolderWatcher {
                 videoObjectGenerator.updateDirectoryContent();
                 setOfPaths.clear();
             }
+
+            videoObjectGenerator.initializeCheckOfChanges();
 
             boolean valid = key.reset();
             if (!valid) {
