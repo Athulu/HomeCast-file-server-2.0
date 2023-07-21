@@ -2,7 +2,6 @@ package com.example.homecastfileserver.services;
 
 import com.example.homecastfileserver.dao.Video;
 import com.example.homecastfileserver.dto.UltimateDTO;
-import com.example.homecastfileserver.dto.VideoDTO;
 import com.example.homecastfileserver.mappers.VideosMapper;
 import com.example.homecastfileserver.repositories.VideosRepository;
 import jakarta.persistence.EntityManager;
