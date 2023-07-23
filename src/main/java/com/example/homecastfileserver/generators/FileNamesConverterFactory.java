@@ -11,9 +11,12 @@ import java.util.regex.Pattern;
 public class FileNamesConverterFactory {
     public static FileNamesConverter getFileNameConverter(String name) {
         int count = name.split("\\.").length;
-        if (count == 2) return MovieConverter.create(name);
-        else if (count == 3) return CustomSeriesConverter.create(name);
-        else return DefaultConverter.create(name);
+
+        return switch (count) {
+            case 2 -> MovieConverter.create(name);
+            case 3 -> CustomSeriesConverter.create(name);
+            default -> DefaultConverter.create(name);
+        };
     }
 
     public static boolean isShindenPatternMatched(String input) {

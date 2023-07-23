@@ -34,6 +34,7 @@ public class FolderWatcher {
         keyMap.put(key, folder);
 
         thumbnailGenerator.generateThumbnails();
+        videoObjectGenerator.initializeCheckOfChanges();
 
         Set<Path> setOfPaths = new HashSet<>();
 
