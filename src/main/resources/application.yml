@@ -19,3 +19,5 @@ spring:
     defer-datasource-initialization: true
 chatgpt:
   token: token
+homecast:
+  ip:

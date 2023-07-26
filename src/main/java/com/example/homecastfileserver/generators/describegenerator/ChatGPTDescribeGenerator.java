@@ -1,6 +1,6 @@
 package com.example.homecastfileserver.generators.describegenerator;
 
-import com.example.homecastfileserver.configs.MyConfig;
+import com.example.homecastfileserver.configs.ChatGPTCongif;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
@@ -14,9 +14,9 @@ import java.util.List;
 @Component
 public class ChatGPTDescribeGenerator implements DescribeGenerator {
     OpenAiService service;
-    MyConfig myConfig;
+    ChatGPTCongif myConfig;
 
-    public ChatGPTDescribeGenerator(MyConfig myConfig) {
+    public ChatGPTDescribeGenerator(ChatGPTCongif myConfig) {
         service = new OpenAiService(myConfig.getToken(), Duration.ofSeconds(30));
         this.myConfig = myConfig;
     }
