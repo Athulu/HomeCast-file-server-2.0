@@ -28,30 +28,22 @@ public class VideoObjectGenerator {
     private final HomeCastConfig homeCastConfig;
 
     public void updateDirectoryContent(){
-        List<String> videoFileNames = getAllDirFiles(); //nazwy plikow
-        List<Integer> videosHashcodes = videosService.getVideosHashcodes(); //hashcody z bazy danych
-        List<Integer> directoryHashcodes = videoFileNames.stream().map(String::hashCode).toList(); //hashcody z folderu
+        List<String> videosFileNames = videosService.getVideosFileNames(); //nazwy plików z bazy danych
+        List<String> videosDirFileNames = getAllDirFiles(); //nazwy plików w folderze
 
-//        for (String fileName: videoFileNames){
-//            if(videosHashcodes.contains(fileName.hashCode())){
-//                videoFileNames.remove(fileName);
-//            }
-//        }
+        //zapisywanie do bazy danych plików, które są w folderze, a nie ma w bazie danych
         List<String> toSaveList = new LinkedList<>();
-
-        for(int i = 0; i < videoFileNames.size(); i++){
-            if(!videosHashcodes.contains(videoFileNames.get(i).hashCode())){
-                toSaveList.add(videoFileNames.get(i));
-            }
-        }
+        for (String fileName:videosDirFileNames)
+            if(!videosFileNames.contains(fileName))
+                toSaveList.add(fileName);
 
         for (Video video: createVideoObjectsFromFileNames(toSaveList))
             videosService.save(video);
 
-        //usuwanie zawartości z bazy danych, której już nie ma w folderze
-        videosHashcodes.removeAll(directoryHashcodes);
-        for (int hashcode: videosHashcodes)
-            videosService.remove(videosService.getVideoByHashcode(hashcode));
+        //usuwanie zawartości z bazy danych, której nie ma w folderze
+        videosFileNames.removeAll(videosDirFileNames);
+        for (String fileName: videosFileNames)
+            videosService.remove(videosService.getVideoByFileName(fileName));
     }
 
     private List<Video> createVideoObjectsFromFileNames(List<String> videoFileNames){
@@ -59,7 +51,6 @@ public class VideoObjectGenerator {
         String episode, title, subtitle, thumb, image480x270, image780x1200;
         int duration;
         Source source;
-        int hashcode;
         for (String fileName: videoFileNames) {
             //TODO: FileNamesConverter tutaj nie może być w tej formie
             FileNamesConverter fileNamesConverter = FileNamesConverterFactory.getFileNameConverter(fileName);
@@ -71,8 +62,7 @@ public class VideoObjectGenerator {
             image780x1200 = "bbb.png";
             duration = 100;
             source = new Source("videos/mp4", "mp4", fileName);
-            hashcode = fileName.hashCode();
-            videoList.add(new Video(episode, title, subtitle, thumb, image480x270, image780x1200, duration, source, hashcode));
+            videoList.add(new Video(fileName, episode, title, subtitle, thumb, image480x270, image780x1200, duration, source));
         }
         return videoList;
     }

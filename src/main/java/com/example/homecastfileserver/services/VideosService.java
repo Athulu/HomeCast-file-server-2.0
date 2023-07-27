@@ -26,19 +26,19 @@ public class VideosService {
         return UltimateDTO.create(homeCastConfig.getIp() + "/mp4/",homeCastConfig.getIp() + "/images/", videosMapper.videoListToVideoDTOList(videosRepository.findAllBy()));
     }
 
-    public List<Integer> getVideosHashcodes(){
-        return videosRepository.findAllBy().stream().map(video -> video.getHashcode()).collect(Collectors.toList());
+    public List<String> getVideosFileNames(){
+        return videosRepository.findAllBy().stream().map(Video::getFileName).collect(Collectors.toList());
     }
 
-    public Video getVideoByHashcode(int hashcode){
-        return videosRepository.findByHashcode(hashcode);
+    public Video getVideoByFileName(String fileName){
+        return videosRepository.findByFileName(fileName);
     }
 
     @Transactional
     public void remove(Video video){
-        Optional<Video> videosByHashcode = Optional.ofNullable(videosRepository.findByHashcode(video.getHashcode()));
-        if (videosByHashcode.isPresent()) {
-            Video vid = videosByHashcode.get();
+        Optional<Video> byFileName = Optional.ofNullable(videosRepository.findByFileName(video.getFileName()));
+        if (byFileName.isPresent()) {
+            Video vid = byFileName.get();
             entityManager.remove(vid);
         }
     }
