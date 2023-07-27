@@ -1,10 +1,12 @@
 package com.example.homecastfileserver.generators;
 
+import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.example.homecastfileserver.dao.Source;
 import com.example.homecastfileserver.dao.Video;
 import com.example.homecastfileserver.generators.describegenerator.DescribeGenerator;
 import com.example.homecastfileserver.services.VideosService;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +18,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class VideoObjectGenerator {
-    public static final String MOVIES_DIRECTORY = "C:\\HomeCast\\mp4";
     public static final String HASHCODE_FILE = "C:\\HomeCast\\hashcode.txt";
     private final DescribeGenerator describeGenerator;
     private final VideosService videosService;
-
-    public VideoObjectGenerator(DescribeGenerator describeGenerator, VideosService videosService) {
-        this.describeGenerator = describeGenerator;
-        this.videosService = videosService;
-    }
+    private final HomeCastConfig homeCastConfig;
 
     public void updateDirectoryContent(){
         List<String> videoFileNames = getAllDirFiles(); //nazwy plikow
@@ -80,8 +77,8 @@ public class VideoObjectGenerator {
         return videoList;
     }
 
-    private static List<String> getAllDirFiles() {
-        return getStrings(MOVIES_DIRECTORY);
+    private List<String> getAllDirFiles() {
+        return getStrings(homeCastConfig.getMp4dir());
     }
 
     public void initializeCheckOfChanges() {

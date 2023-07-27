@@ -1,4 +1,4 @@
-﻿package com.example.homecastfileserver.configs;
+package com.example.homecastfileserver.configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "homecast")
 public class HomeCastConfig {
     private String ip;
+    private String imagesdir;
+    private String mp4dir;
 
     public String getIp() {
         return ip;
@@ -14,5 +16,21 @@ public class HomeCastConfig {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getImagesdir() {
+        return imagesdir;
+    }
+
+    public void setImagesdir(String imagesdir) {
+        this.imagesdir = imagesdir;
+    }
+
+    public String getMp4dir() {
+        return mp4dir;
+    }
+
+    public void setMp4dir(String mp4dir) {
+        this.mp4dir = mp4dir;
     }
 }

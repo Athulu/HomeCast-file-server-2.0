@@ -1,5 +1,6 @@
 package com.example.homecastfileserver.services;
 
+import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.dao.Video;
 import com.example.homecastfileserver.dto.UltimateDTO;
 import com.example.homecastfileserver.mappers.VideosMapper;
@@ -19,9 +20,10 @@ public class VideosService {
     private final EntityManager entityManager;
     private final VideosRepository videosRepository;
     private final VideosMapper videosMapper;
+    private final HomeCastConfig homeCastConfig;
 
     public UltimateDTO getListOfVideos(){
-        return UltimateDTO.create("http://192.168.1.109:8080/mp4/","http://192.168.1.109:8080/images/",videosMapper.videoListToVideoDTOList(videosRepository.findAllBy()));
+        return UltimateDTO.create(homeCastConfig.getIp() + "/mp4/",homeCastConfig.getIp() + "/images/", videosMapper.videoListToVideoDTOList(videosRepository.findAllBy()));
     }
 
     public List<Integer> getVideosHashcodes(){
