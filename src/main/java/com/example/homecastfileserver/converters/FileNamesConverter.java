@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Setter
 @AllArgsConstructor
 public abstract class FileNamesConverter {
-    String fileName;
-    String[] splittedFileName;
-    String name;
+//    String fileName;
+//    String[] splittedFileName;
+    String title;
     String episode;
 }

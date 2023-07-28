@@ -25,7 +25,7 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator {
     public String getDescription(FileNamesConverter converter) {
         String season = converter.getEpisode().substring(1, 3);
         String episode = converter.getEpisode().substring(4, 6);
-        String series = converter.getName();
+        String series = converter.getTitle();
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
                 .messages(List.of(new ChatMessage("user", "Krótki opis odcinka numer " + episode + " z sezonu numer " + season + " \"" + series + "\" nie zdradzający fabuły")))
                 .model("gpt-3.5-turbo")

@@ -1,11 +1,11 @@
 package com.example.homecastfileserver.converters;
 
 public class DefaultConverter extends FileNamesConverter {
-    private DefaultConverter(String fileName, String[] splittedFileName, String name, String episode) {
-        super(fileName, splittedFileName, name, episode);
+    private DefaultConverter(String title, String episode) {
+        super(title, episode);
     }
 
-    public static DefaultConverter create(String name){
-        return new DefaultConverter(name, name.split("\\."), name, "");
+    public static DefaultConverter create(String fileName){
+        return new DefaultConverter(fileName, "");
     }
 }

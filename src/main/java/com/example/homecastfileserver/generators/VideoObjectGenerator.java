@@ -55,7 +55,7 @@ public class VideoObjectGenerator {
             //TODO: FileNamesConverter tutaj nie może być w tej formie
             FileNamesConverter fileNamesConverter = FileNamesConverterFactory.getFileNameConverter(fileName);
             episode = fileNamesConverter.getEpisode();
-            title = fileNamesConverter.getName();
+            title = fileNamesConverter.getTitle();
             subtitle = describeGenerator.getDescription(fileNamesConverter);
             thumb = fileName.replace(".mp4", "") + "480x270.png";
             image480x270 = thumb;
@@ -66,6 +66,8 @@ public class VideoObjectGenerator {
         }
         return videoList;
     }
+
+    //title, episode
 
     private List<String> getAllDirFiles() {
         return getStrings(homeCastConfig.getMp4dir());
