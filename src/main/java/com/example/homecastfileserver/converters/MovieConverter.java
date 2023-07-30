@@ -6,6 +6,7 @@ public class MovieConverter extends FileNamesConverter {
     }
 
     public static MovieConverter create(String fileName){
+        fileName = fileName.replace(".mp4", "");
         String[] splittedFileName = fileName.split("\\.");
         String title = splittedFileName[0];
         return new MovieConverter(title, "");
