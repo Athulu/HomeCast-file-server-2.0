@@ -1,5 +1,14 @@
 package com.example.homecastfileserver.generators;
 
+import com.example.homecastfileserver.configs.HomeCastConfig;
+import lombok.AllArgsConstructor;
+import org.imgscalr.Scalr;
+import org.jcodec.api.FrameGrab;
+import org.jcodec.common.model.Picture;
+import org.jcodec.scale.AWTUtil;
+import org.springframework.stereotype.Component;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -7,28 +16,19 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.imageio.ImageIO;
-
-import lombok.NoArgsConstructor;
-import org.imgscalr.Scalr;
-import org.jcodec.api.FrameGrab;
-import org.jcodec.common.model.Picture;
-import org.jcodec.scale.AWTUtil;
-import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor
+@AllArgsConstructor
 public class ThumbnailGenerator {
-    public static final String MAIN_DIRECTORY = "C:\\HomeCast\\";
     private static final int frameNumber = 100;
+    private final HomeCastConfig homeCastConfig;
 
     public void generateThumbnails() {
 
         DirectoryStream.Filter<Path> filter = file -> {
-            return file.toString().endsWith(".mp4") || file.toString().endsWith(".MP4")
-                    || file.toString().endsWith(".mov") || file.toString().endsWith(".MOV");
+            return file.toString().endsWith(".mp4") || file.toString().endsWith(".MP4");
         };
-        Path dirName = Paths.get(MAIN_DIRECTORY + "mp4");
+        Path dirName = Paths.get(homeCastConfig.getMp4dir());
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dirName, filter)) {
             stream.forEach(this::generateThumbnail);
         } catch (IOException e1) {
@@ -43,10 +43,9 @@ public class ThumbnailGenerator {
             BufferedImage bufferedImage = AWTUtil.toBufferedImage(picture);
             bufferedImage = Scalr.resize(bufferedImage, 480);
             ImageIO.write(bufferedImage, "png", new File(
-                    MAIN_DIRECTORY + "images\\" + path.getFileName().toString().replace(".mp4", "") + "480x270.png"));
+                    homeCastConfig.getImagesdir() + path.getFileName().toString().replace(".mp4", "") + "480x270.png"));
         } catch (Exception e1) {
-//            e1.printStackTrace();
-            System.out.println(e1);
+            e1.printStackTrace();
         }
     }
 

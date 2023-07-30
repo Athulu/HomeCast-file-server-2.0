@@ -1,6 +1,6 @@
 package com.example.homecastfileserver.generators.describegenerator;
 
-import com.example.homecastfileserver.configs.MyConfig;
+import com.example.homecastfileserver.configs.ChatGPTCongif;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
@@ -14,9 +14,9 @@ import java.util.List;
 @Component
 public class ChatGPTDescribeGenerator implements DescribeGenerator {
     OpenAiService service;
-    MyConfig myConfig;
+    ChatGPTCongif myConfig;
 
-    public ChatGPTDescribeGenerator(MyConfig myConfig) {
+    public ChatGPTDescribeGenerator(ChatGPTCongif myConfig) {
         service = new OpenAiService(myConfig.getToken(), Duration.ofSeconds(30));
         this.myConfig = myConfig;
     }
@@ -25,7 +25,7 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator {
     public String getDescription(FileNamesConverter converter) {
         String season = converter.getEpisode().substring(1, 3);
         String episode = converter.getEpisode().substring(4, 6);
-        String series = converter.getName();
+        String series = converter.getTitle();
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
                 .messages(List.of(new ChatMessage("user", "Krótki opis odcinka numer " + episode + " z sezonu numer " + season + " \"" + series + "\" nie zdradzający fabuły")))
                 .model("gpt-3.5-turbo")

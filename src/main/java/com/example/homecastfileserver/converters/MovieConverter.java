@@ -1,12 +1,14 @@
 package com.example.homecastfileserver.converters;
 
 public class MovieConverter extends FileNamesConverter {
-    public MovieConverter(String fileName, String[] splittedFileName, String name, String episode) {
-        super(fileName, splittedFileName, name, episode);
+    public MovieConverter(String title, String episode) {
+        super(title, episode);
     }
 
-    public static MovieConverter create(String name){
-        String[] splittedFileName = name.split("\\.");
-        return new MovieConverter(name, splittedFileName, splittedFileName[0], "");
+    public static MovieConverter create(String fileName){
+        fileName = fileName.replace(".mp4", "");
+        String[] splittedFileName = fileName.split("\\.");
+        String title = splittedFileName[0];
+        return new MovieConverter(title, "");
     }
 }
