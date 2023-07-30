@@ -77,7 +77,7 @@ public class VideoObjectGenerator {
         int hashcode = getAllDirFiles().hashCode();
         if (isDirectoryDifferent(hashcode)) {
             try {
-                PrintWriter zapis = new PrintWriter("hashcode.txt");
+                PrintWriter zapis = new PrintWriter(homeCastConfig.getIp() + "/hashcode.txt"); //tutaj
                 zapis.println(hashcode);
                 zapis.close();
             } catch (FileNotFoundException e) {
