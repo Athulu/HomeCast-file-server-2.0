@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "homecast")
 public class HomeCastConfig {
     private String ip;
+    private String homecastdir;
     private String imagesdir;
     private String mp4dir;
 
@@ -16,6 +17,13 @@ public class HomeCastConfig {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getHomecastdir() {
+        return homecastdir;
+    }
+    public void setHomecastdir(String homecastdir) {
+        this.homecastdir = homecastdir;
     }
 
     public String getImagesdir() {
