@@ -8,4 +8,9 @@ public class DefaultConverter extends FileNamesConverter {
     public static DefaultConverter create(String fileName){
         return new DefaultConverter(fileName, "");
     }
+
+    @Override
+    public String toString() {
+        return "title: " + this.title + "\nepisode: " + this.episode;
+    }
 }

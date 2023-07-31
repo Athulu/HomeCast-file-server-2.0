@@ -12,4 +12,8 @@ public class CustomSeriesConverter extends FileNamesConverter {
         return new CustomSeriesConverter(title, episode);
     }
 
+    @Override
+    public String toString() {
+        return "title: " + this.title + "\nepisode: " + this.episode;
+    }
 }
