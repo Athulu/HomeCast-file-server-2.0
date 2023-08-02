@@ -11,4 +11,9 @@ public class MovieConverter extends FileNamesConverter {
         String title = splittedFileName[0];
         return new MovieConverter(title, "");
     }
+
+    @Override
+    public String toString() {
+        return "title: " + this.title + "\nepisode: " + this.episode;
+    }
 }

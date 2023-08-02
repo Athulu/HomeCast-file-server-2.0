@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "chatgpt")
-public class ChatGPTCongif {
+public class ChatGPTConfig {
 
     private String token;
 

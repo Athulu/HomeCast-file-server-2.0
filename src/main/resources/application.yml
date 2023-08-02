@@ -20,7 +20,7 @@ spring:
 chatgpt:
   token: token
 homecast:
-  ip: http://192.168.1.107:8080
+  ip: http://192.168.1.105:8080
   imagesdir: C:\HomeCast\images\
   mp4dir: C:\HomeCast\mp4\
   homecastdir: C:\HomeCast\

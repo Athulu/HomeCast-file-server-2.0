@@ -1,6 +1,6 @@
 package com.example.homecastfileserver.generators.describegenerator;
 
-import com.example.homecastfileserver.configs.ChatGPTCongif;
+import com.example.homecastfileserver.configs.ChatGPTConfig;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @Component
 public class ChatGPTDescribeGenerator implements DescribeGenerator {
-    OpenAiService service;
-    ChatGPTCongif myConfig;
+    OpenAiService openAiService;
+    ChatGPTConfig chatGPTConfig;
 
-    public ChatGPTDescribeGenerator(ChatGPTCongif myConfig) {
-        service = new OpenAiService(myConfig.getToken(), Duration.ofSeconds(30));
-        this.myConfig = myConfig;
+    public ChatGPTDescribeGenerator(ChatGPTConfig myConfig) {
+        this.openAiService = new OpenAiService(myConfig.getToken(), Duration.ofSeconds(30));
+        this.chatGPTConfig = myConfig;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ChatGPTDescribeGenerator implements DescribeGenerator {
                 .messages(List.of(new ChatMessage("user", "Krótki opis odcinka numer " + episode + " z sezonu numer " + season + " \"" + series + "\" nie zdradzający fabuły")))
                 .model("gpt-3.5-turbo")
                 .build();
-        List<ChatCompletionChoice> choices = service.createChatCompletion(chatCompletionRequest).getChoices();
+        List<ChatCompletionChoice> choices = openAiService.createChatCompletion(chatCompletionRequest).getChoices();
 
         StringBuilder stringBuilder = new StringBuilder();
         choices.stream()

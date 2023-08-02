@@ -63,7 +63,6 @@ public class FolderWatcher {
                     } else {
                         System.out.println("Plik nie został w całości przeniesiony: " + createdFile);
                     }
-
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
                     System.out.println("Usunięto plik: " + event.context().toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
