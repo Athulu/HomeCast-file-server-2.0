@@ -53,7 +53,7 @@ public class HomeCastConfig {
         this.mp4dir = mp4dir;
     }
 
-    public static String getAddressIP() throws Exception{
+    private static String getAddressIP() throws Exception{
         Enumeration e = NetworkInterface.getNetworkInterfaces();
         while(e.hasMoreElements())
         {
