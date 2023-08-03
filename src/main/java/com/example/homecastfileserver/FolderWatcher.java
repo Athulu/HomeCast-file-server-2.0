@@ -4,6 +4,8 @@ import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.generators.ThumbnailGenerator;
 import com.example.homecastfileserver.generators.VideoObjectGenerator;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -17,12 +19,16 @@ import java.util.Set;
 @Component
 @AllArgsConstructor
 public class FolderWatcher {
+    private static final Logger logger = LoggerFactory.getLogger(FolderWatcher.class);
     private final ThumbnailGenerator thumbnailGenerator;
     private final VideoObjectGenerator videoObjectGenerator;
     private final HomeCastConfig homeCastConfig;
 
     @EventListener(ContextRefreshedEvent.class)
     public void run() throws Exception {
+
+        homeCastConfig.setIpAdress(); //pobranie IP klasy C adresu prywatnego i ustawienie go
+
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path folder = Paths.get(homeCastConfig.getMp4dir());
@@ -50,7 +56,7 @@ public class FolderWatcher {
 
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
                     Path createdFile = dir.resolve((Path) event.context());
-                    System.out.println("Nowy plik: " + createdFile);
+                    logger.info("Nowy plik: " + createdFile);
 
                     // Sprawdzamy, czy rozmiar pliku się nie zmienia przez określony czas
                     long fileSize = Files.size(createdFile);
@@ -58,15 +64,15 @@ public class FolderWatcher {
                     long newFileSize = Files.size(createdFile);
 
                     if (fileSize == newFileSize) {
-                        System.out.println("Plik w całości przeniesiony: " + createdFile);
+                        logger.info("Plik w całości przeniesiony: " + createdFile);
                         setOfPaths.add(path);
                     } else {
-                        System.out.println("Plik nie został w całości przeniesiony: " + createdFile);
+                        logger.info("Plik nie został w całości przeniesiony: " + createdFile);
                     }
                 } else if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
-                    System.out.println("Usunięto plik: " + event.context().toString());
+                    logger.info("Usunięto plik: " + event.context().toString());
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                    System.out.println("Zmodyfikowano plik: " + event.context().toString());
+                    logger.info("Zmodyfikowano plik: " + event.context().toString());
                 }
             }
 

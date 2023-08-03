@@ -6,6 +6,8 @@ import org.imgscalr.Scalr;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -20,6 +22,7 @@ import java.nio.file.Paths;
 @Component
 @AllArgsConstructor
 public class ThumbnailGenerator {
+    private static final Logger logger = LoggerFactory.getLogger(ThumbnailGenerator.class);
     private static final int frameNumber = 100;
     private final HomeCastConfig homeCastConfig;
 
@@ -45,6 +48,7 @@ public class ThumbnailGenerator {
             ImageIO.write(bufferedImage, "png", new File(
                     homeCastConfig.getImagesdir() + path.getFileName().toString().replace(".mp4", "") + "480x270.png"));
         } catch (Exception e1) {
+            logger.error("Nie udało się utworzyć miniaturki");
             e1.printStackTrace();
         }
     }
@@ -53,7 +57,7 @@ public class ThumbnailGenerator {
         try {
             File file = new File(path.toString());
             while (!file.canRead()) {
-                System.out.println("Plik jest już używany przez inny proces");
+                logger.warn("Plik jest już używany przez inny proces");
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e) {

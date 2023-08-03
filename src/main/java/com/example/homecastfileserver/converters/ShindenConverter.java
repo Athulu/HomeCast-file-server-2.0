@@ -1,5 +1,13 @@
 package com.example.homecastfileserver.converters;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ShindenConverter extends FileNamesConverter {
     private ShindenConverter(String title, String episode) {
         super(title, episode);

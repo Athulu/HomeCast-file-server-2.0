@@ -10,6 +10,8 @@ import com.example.homecastfileserver.generators.describegenerator.EmptyDescribe
 import com.example.homecastfileserver.services.VideosService;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -24,6 +26,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class VideoObjectGenerator {
+    private static final Logger logger = LoggerFactory.getLogger(VideoObjectGenerator.class);
     public static final String HASHCODE_FILE_NAME = "hashcode.txt";
     private final DescribeGenerator describeGenerator;
     private final VideosService videosService;
@@ -93,7 +96,7 @@ public class VideoObjectGenerator {
             BufferedReader brTest = new BufferedReader(new FileReader(homeCastConfig.getHomecastdir() + HASHCODE_FILE_NAME));
             text = brTest.readLine();
         } catch (Exception e) {
-            System.err.println(">>>Nie można odnaleźć określonego pliku, więc stworzymy nowy");
+            logger.error("Nie można odnaleźć określonego pliku, więc stworzymy nowy");
             new File(homeCastConfig.getHomecastdir() + HASHCODE_FILE_NAME);
             text = "1";
         }
@@ -113,7 +116,7 @@ public class VideoObjectGenerator {
                 fileNames.add(path.getFileName().toString());
             }
         } catch (IOException ex) {
-            System.out.println("Nie udało się wczytać nazw plików");
+            logger.error("Nie udało się wczytać nazw plików");
         }
         return fileNames;
     }
