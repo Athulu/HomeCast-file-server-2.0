@@ -9,10 +9,6 @@ public class DefaultConverter extends FileNamesConverter {
         return new DefaultConverter(fileName, "");
     }
 
-    @Override
-    public String toString() {
-        return "title: " + this.title + "\nepisode: " + this.episode;
-    }
 
     @Override
     public String generateChatMessageForDescription() {
