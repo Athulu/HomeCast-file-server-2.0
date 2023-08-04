@@ -16,4 +16,9 @@ public class MovieConverter extends FileNamesConverter {
     public String toString() {
         return "title: " + this.title + "\nepisode: " + this.episode;
     }
+
+    @Override
+    public String generateChatMessageForDescription() {
+        return "Napisz mi krótki opis filmu: " + title + " nie zdradzający jego fabuły";
+    }
 }

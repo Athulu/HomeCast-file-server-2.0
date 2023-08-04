@@ -12,4 +12,5 @@ import org.springframework.stereotype.Component;
 public abstract class FileNamesConverter {
     String title;
     String episode;
+    public abstract String generateChatMessageForDescription();
 }

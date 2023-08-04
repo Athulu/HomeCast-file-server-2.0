@@ -16,4 +16,11 @@ public class CustomSeriesConverter extends FileNamesConverter {
     public String toString() {
         return "title: " + this.title + "\nepisode: " + this.episode;
     }
+
+    @Override
+    public String generateChatMessageForDescription() {
+        String seasonNumber = episode.substring(1, 3);
+        String episodeNumber = episode.substring(4, 6);
+        return "Krótki opis odcinka numer " + episodeNumber + " z sezonu numer " + seasonNumber + " \"" + title + "\" nie zdradzający fabuły";
+    }
 }

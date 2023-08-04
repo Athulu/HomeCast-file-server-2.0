@@ -13,4 +13,9 @@ public class DefaultConverter extends FileNamesConverter {
     public String toString() {
         return "title: " + this.title + "\nepisode: " + this.episode;
     }
+
+    @Override
+    public String generateChatMessageForDescription() {
+        return "Najpierw odgadnij co to za film po nazwie pliku, a potem napisz krótki opis tego filmu nie zdradzający fabuły\n nazwa pliku: " + title;
+    }
 }
