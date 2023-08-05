@@ -15,6 +15,7 @@ public class Video {
     private String fileName;
     private String episode;
     private String title;
+    @Column(length = 8192)
     private String subtitle;
     private String thumb;
     private String image480x270;

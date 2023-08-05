@@ -60,3 +60,5 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 /target/
+h2database.mv.db
+h2database.trace.db
