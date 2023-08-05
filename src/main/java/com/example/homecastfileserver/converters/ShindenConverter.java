@@ -32,7 +32,7 @@ public class ShindenConverter extends FileNamesConverter {
     }
 
     @Override
-    public String toString() {
-        return "title: " + this.title + "\nepisode: " + this.episode;
+    public String generateChatMessageForDescription() {
+        return "Napisz mi krótki opis anime" + title + " nie zdradzający fabuły z " + episode.replace("k", "a");
     }
 }

@@ -18,7 +18,7 @@ spring:
     show-sql: true
     defer-datasource-initialization: true
 chatgpt:
-  token: token
+  token: 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
 homecast:
   ip: http://192.168.1.110:8080
   imagesdir: C:\HomeCast\images\

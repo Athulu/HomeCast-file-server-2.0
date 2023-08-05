@@ -1,5 +1,6 @@
 package com.example.homecastfileserver.generators;
 
+import com.example.homecastfileserver.configs.ChatGPTConfig;
 import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.converters.FileNamesConverter;
 import com.example.homecastfileserver.dao.Source;
@@ -28,9 +29,9 @@ import java.util.List;
 public class VideoObjectGenerator {
     private static final Logger logger = LoggerFactory.getLogger(VideoObjectGenerator.class);
     public static final String HASHCODE_FILE_NAME = "hashcode.txt";
-    private final DescribeGenerator describeGenerator;
     private final VideosService videosService;
     private final HomeCastConfig homeCastConfig;
+    private final ChatGPTConfig chatGPTConfig;
 
     public void updateDirectoryContent() {
         List<String> videosFileNames = videosService.getVideosFileNames(); //nazwy plików z bazy danych
@@ -42,13 +43,20 @@ public class VideoObjectGenerator {
             if (!videosFileNames.contains(fileName))
                 toSaveList.add(fileName);
 
-        for (Video video : createVideoObjectsFromFileNames(toSaveList))
+        List<Video> videoList = createVideoObjectsFromFileNames(toSaveList);
+        for (Video video : videoList)
             videosService.save(video);
 
         //usuwanie zawartości z bazy danych, której nie ma w folderze
         videosFileNames.removeAll(videosDirFileNames);
         for (String fileName : videosFileNames)
             videosService.remove(videosService.getVideoByFileName(fileName));
+
+        //uzupelnienie opisow
+        for (Video video : videoList){
+            FileNamesConverter fileNamesConverter = FileNamesConverterFactory.getFileNameConverter(video.getFileName());
+            videosService.updateVideoDescription(video.getFileName(), getDescribeGenerator().getDescription(fileNamesConverter));
+        }
     }
 
     private List<Video> createVideoObjectsFromFileNames(List<String> videoFileNames) {
@@ -57,11 +65,10 @@ public class VideoObjectGenerator {
         int duration;
         Source source;
         for (String fileName : videoFileNames) {
-            //TODO: FileNamesConverter tutaj nie może być w tej formie
             FileNamesConverter fileNamesConverter = FileNamesConverterFactory.getFileNameConverter(fileName);
             episode = fileNamesConverter.getEpisode();
             title = fileNamesConverter.getTitle();
-            subtitle = describeGenerator.getDescription(fileNamesConverter);
+            subtitle = "";
             thumb = fileName.replace(".mp4", "") + "480x270.png";
             image480x270 = thumb;
             image780x1200 = "bbb.png";
@@ -70,6 +77,11 @@ public class VideoObjectGenerator {
             videoList.add(new Video(fileName, episode, title, subtitle, thumb, image480x270, image780x1200, duration, source));
         }
         return videoList;
+    }
+
+    private DescribeGenerator getDescribeGenerator(){
+        if(!chatGPTConfig.getToken().equals("token")) return new ChatGPTDescribeGenerator(chatGPTConfig);
+        return new EmptyDescribeGenerator();
     }
 
     private List<String> getAllDirFiles() {

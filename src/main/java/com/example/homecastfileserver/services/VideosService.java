@@ -48,4 +48,12 @@ public class VideosService {
     public void save(Video video){
         entityManager.persist(video);
     }
+
+    @Transactional
+    public void updateVideoDescription(String fileName, String description) {
+        Video video = videosRepository
+                .findByFileName(fileName);
+        video.setSubtitle(description);
+        videosRepository.save(video);
+    }
 }

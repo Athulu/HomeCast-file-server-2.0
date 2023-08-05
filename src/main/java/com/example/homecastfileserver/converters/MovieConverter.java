@@ -13,7 +13,7 @@ public class MovieConverter extends FileNamesConverter {
     }
 
     @Override
-    public String toString() {
-        return "title: " + this.title + "\nepisode: " + this.episode;
+    public String generateChatMessageForDescription() {
+        return "Napisz mi krótki opis filmu: " + title + " nie zdradzający jego fabuły";
     }
 }
