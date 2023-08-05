@@ -1,3 +1,5 @@
+ALTER TABLE video ALTER COLUMN subtitle VARCHAR(4096);
+
 INSERT INTO sources(mime, type, url)
 VALUES ('videos/mp4', 'mp4', 's02e02.Jujutsu Kaisen.mp4'),
        ('videos/mp4', 'mp4', 's02e01.Jujutsu Kaisen.mp4');
