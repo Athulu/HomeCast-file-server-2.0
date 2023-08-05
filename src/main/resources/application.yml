@@ -5,7 +5,7 @@ spring:
     location: logo.txt
     charset: UTF-8
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:file:./h2database
     username: sa
     password:
   h2:
@@ -14,11 +14,10 @@ spring:
       path: /h2
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
-    defer-datasource-initialization: true
 chatgpt:
-  token: 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
+  token: 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
 homecast:
   ip: http://192.168.1.110:8080
   imagesdir: C:\HomeCast\images\
