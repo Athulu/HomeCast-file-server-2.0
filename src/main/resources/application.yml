@@ -5,7 +5,7 @@ spring:
     location: logo.txt
     charset: UTF-8
   datasource:
-    url: jdbc:h2:file:./h2database
+    url: jdbc:h2:file:${homecast.homecastdir}/h2database
     username: sa
     password:
   h2:
@@ -17,9 +17,9 @@ spring:
       ddl-auto: update
     show-sql: true
 chatgpt:
-  token: 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
+  token: token
 homecast:
-  ip: http://192.168.1.110:8080
-  imagesdir: C:\HomeCast\images\
-  mp4dir: C:\HomeCast\mp4\
+  ip: http://192.168.1.110:${server.port}
   homecastdir: C:\HomeCast\
+  imagesdir: ${homecast.homecastdir}\images\
+  mp4dir: ${homecast.homecastdir}\mp4\
