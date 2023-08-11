@@ -10,6 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,7 +27,7 @@ public class FolderWatcher {
 
     @EventListener(ContextRefreshedEvent.class)
     public void run() throws Exception {
-
+        createDirectoriesIfNotExists();
         homeCastConfig.setIpAdress(); //pobranie IP klasy C adresu prywatnego i ustawienie go
 
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
@@ -92,6 +93,22 @@ public class FolderWatcher {
                     break;
                 }
             }
+        }
+    }
+    void createDirectoriesIfNotExists(){
+        try {
+            Path imagesPath = Paths.get(homeCastConfig.getImagesdir());
+            Path mp4Path = Paths.get(homeCastConfig.getMp4dir());
+            if(!Files.exists(imagesPath)){
+                Files.createDirectories(imagesPath);
+                logger.info("Stworzono folder: " + imagesPath);
+            }
+            if(!Files.exists(mp4Path)){
+                Files.createDirectories(mp4Path);
+                logger.info("Stworzono folder: " + mp4Path);
+            }
+        } catch (IOException e) {
+            logger.error("Nie udało się stworzyć folderów");
         }
     }
 }
