@@ -8,6 +8,14 @@ import org.springframework.context.annotation.Configuration;
 public class ChatGPTConfig {
 
     private String token;
+    private Boolean isTokenActive;
+    public Boolean getTokenActive() {
+        return isTokenActive;
+    }
+
+    public void setTokenActive(Boolean tokenActive) {
+        isTokenActive = tokenActive;
+    }
 
     public String getToken() {
         return token;

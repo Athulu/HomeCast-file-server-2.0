@@ -18,6 +18,7 @@ spring:
     show-sql: true
 chatgpt:
   token: token
+  isTokenActive: false
 homecast:
   ip: http://192.168.1.110:${server.port}
   homecastdir: C:\HomeCast\

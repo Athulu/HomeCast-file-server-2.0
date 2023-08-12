@@ -29,19 +29,16 @@ public class FolderWatcher {
     public void run() throws Exception {
         createDirectoriesIfNotExists();
         homeCastConfig.setIpAdress(); //pobranie IP klasy C adresu prywatnego i ustawienie go
+        thumbnailGenerator.generateThumbnails();
+        videoObjectGenerator.initializeCheckOfChanges();
 
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path folder = Paths.get(homeCastConfig.getMp4dir());
         WatchKey key = folder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-
         Map<WatchKey, Path> keyMap = new HashMap<>();
         keyMap.put(key, folder);
-
-        thumbnailGenerator.generateThumbnails();
-        videoObjectGenerator.initializeCheckOfChanges();
-
         Set<Path> setOfPaths = new HashSet<>();
 
         while (true) {
