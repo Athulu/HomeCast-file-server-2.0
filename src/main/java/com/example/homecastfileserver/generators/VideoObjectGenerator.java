@@ -80,8 +80,6 @@ public class VideoObjectGenerator {
     }
 
     private DescribeGenerator getDescribeGenerator(){
-//        if(!chatGPTConfig.getToken().equals("token")) return new ChatGPTDescribeGenerator(chatGPTConfig);
-//        return new EmptyDescribeGenerator();
         if(chatGPTConfig.getTokenActive()) return new ChatGPTDescribeGenerator(chatGPTConfig);
         else return new EmptyDescribeGenerator();
     }

@@ -1,12 +1,9 @@
 package com.example.homecastfileserver;
 
-import com.example.homecastfileserver.configs.ChatGPTConfig;
 import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.generators.ThumbnailGenerator;
 import com.example.homecastfileserver.generators.VideoObjectGenerator;
 import com.example.homecastfileserver.services.InitializeService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +11,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.HashSet;
