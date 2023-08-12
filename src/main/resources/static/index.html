@@ -114,13 +114,13 @@
     </style>
 </head>
     <body>
-        <form action="/token">
+        <form action="/token" method="post">
             <h1>HomeCast - ustawienia</h1>
             <div class="formcontainer">
                 <hr/>
                 <div class="container">
                     <label><strong>ChatGPT API token</strong></label>
-                    <input class="tab" type="text" placeholder="Wklej token..." name="token" required>
+                    <input type="text" placeholder="Wklej token..." name="token" required>
 
                     <label class="switch">
                         <input type="checkbox" name="isActive">
