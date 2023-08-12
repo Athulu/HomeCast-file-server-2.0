@@ -1,5 +1,6 @@
 package com.example.homecastfileserver.controllers;
 
+import com.example.homecastfileserver.services.InitializeService;
 import com.example.homecastfileserver.services.SettingsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

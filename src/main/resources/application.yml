@@ -16,9 +16,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-chatgpt:
-  token: token
-  istokenactive: False
+#chatgpt:
+#  token: token
+#  istokenactive: false
 homecast:
   ip: http://192.168.1.110:${server.port}
   homecastdir: C:\HomeCast\

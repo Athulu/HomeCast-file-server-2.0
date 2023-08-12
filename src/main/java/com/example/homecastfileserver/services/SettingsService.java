@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SettingsService {
     private final ChatGPTConfig chatGPTConfig;
+    private final InitializeService initializeService;
 
-    public void setTokenChatGPT(String token, boolean isActive){
+    public void setTokenChatGPT(String token, Boolean isActive){
         chatGPTConfig.setToken(token);
         chatGPTConfig.setTokenActive(isActive);
+        initializeService.overrideJSONFile();
     }
 }
