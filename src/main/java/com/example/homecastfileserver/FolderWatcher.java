@@ -3,6 +3,7 @@ package com.example.homecastfileserver;
 import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.generators.ThumbnailGenerator;
 import com.example.homecastfileserver.generators.VideoObjectGenerator;
+import com.example.homecastfileserver.services.InitializeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.nio.file.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,24 +24,21 @@ public class FolderWatcher {
     private final ThumbnailGenerator thumbnailGenerator;
     private final VideoObjectGenerator videoObjectGenerator;
     private final HomeCastConfig homeCastConfig;
+    private final InitializeService initializeService;
+
 
     @EventListener(ContextRefreshedEvent.class)
     public void run() throws Exception {
-        createDirectoriesIfNotExists();
-        homeCastConfig.setIpAdress(); //pobranie IP klasy C adresu prywatnego i ustawienie go
+        //tworzenie brakujących plików i folderów, ustawienie IP, generwoanie miniaturek dla plików, które ich nie mają
+        initializeService.initialize();
 
         // Tworzymy obiekt WatchService dla folderu, którego zmiany chcemy monitorować
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path folder = Paths.get(homeCastConfig.getMp4dir());
         WatchKey key = folder.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY);
-
         Map<WatchKey, Path> keyMap = new HashMap<>();
         keyMap.put(key, folder);
-
-        thumbnailGenerator.generateThumbnails();
-        videoObjectGenerator.initializeCheckOfChanges();
-
         Set<Path> setOfPaths = new HashSet<>();
 
         while (true) {
@@ -93,22 +90,6 @@ public class FolderWatcher {
                     break;
                 }
             }
-        }
-    }
-    void createDirectoriesIfNotExists(){
-        try {
-            Path imagesPath = Paths.get(homeCastConfig.getImagesdir());
-            Path mp4Path = Paths.get(homeCastConfig.getMp4dir());
-            if(!Files.exists(imagesPath)){
-                Files.createDirectories(imagesPath);
-                logger.info("Stworzono folder: " + imagesPath);
-            }
-            if(!Files.exists(mp4Path)){
-                Files.createDirectories(mp4Path);
-                logger.info("Stworzono folder: " + mp4Path);
-            }
-        } catch (IOException e) {
-            logger.error("Nie udało się stworzyć folderów");
         }
     }
 }

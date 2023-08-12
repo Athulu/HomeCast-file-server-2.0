@@ -2,7 +2,6 @@ package com.example.homecastfileserver.configs;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.example.homecastfileserver.Application;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import java.net.InetAddress;
