@@ -38,6 +38,7 @@ public class InitializeService {
     }
 
     public void overrideJSONFile(){
+        createChatGPTJsonFileIfNotExists();
         ChatGPTConfigObject newDataObject = new ChatGPTConfigObject(chatGPTConfig.getToken(), chatGPTConfig.getTokenActive());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -67,11 +68,14 @@ public class InitializeService {
     }
 
     private void createChatGPTJsonFileIfNotExists(){
-        ChatGPTConfigObject dataObject = new ChatGPTConfigObject("", false);
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.writeValue(new File(homeCastConfig.getHomecastdir() + "chatgpt.txt"), dataObject);
-            logger.info("Plik chatgpt.txt został wygenerowany");
+            Path chatGPTFile = Paths.get(homeCastConfig.getHomecastdir() + "chatgpt.txt");
+            if(!Files.exists(chatGPTFile)){
+                ChatGPTConfigObject dataObject = new ChatGPTConfigObject("", false);
+                ObjectMapper objectMapper = new ObjectMapper();
+                objectMapper.writeValue(new File(homeCastConfig.getHomecastdir() + "chatgpt.txt"), dataObject);
+                logger.info("Plik chatgpt.txt został wygenerowany");
+            }
         } catch (IOException e) {
             logger.error("Nie udało się wygenerować pliku chatgpt.txt");
             e.printStackTrace();
