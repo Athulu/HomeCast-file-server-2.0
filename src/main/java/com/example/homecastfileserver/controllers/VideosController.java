@@ -18,6 +18,6 @@ public class VideosController {
 
     @GetMapping("/videos")
     public ResponseEntity<UltimateDTO> getVideos() {
-        return ResponseEntity.ok().body(videosService.getListOfVideos());
+        return ResponseEntity.ok().body(videosService.getListOfVideosSortedBySeriesAndEpisode());
     }
 }
