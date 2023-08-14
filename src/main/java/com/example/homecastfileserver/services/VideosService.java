@@ -4,10 +4,13 @@ import com.example.homecastfileserver.configs.HomeCastConfig;
 import com.example.homecastfileserver.dao.Video;
 import com.example.homecastfileserver.dto.UltimateDTO;
 import com.example.homecastfileserver.dto.VideoDTO;
+import com.example.homecastfileserver.exceptions.KremowkaException;
 import com.example.homecastfileserver.mappers.VideosMapper;
 import com.example.homecastfileserver.repositories.VideosRepository;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +20,12 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class VideosService {
+    private static final Logger logger = LoggerFactory.getLogger(VideosService.class);
     private final EntityManager entityManager;
     private final VideosRepository videosRepository;
     private final VideosMapper videosMapper;
     private final HomeCastConfig homeCastConfig;
-    private static final int CYBER_PAPAJ_2137 = 2137;
+    private static final int CYBER_POPE_2137 = 2137;
 
     public UltimateDTO getListOfVideosSortedByFileName(){
         return UltimateDTO.create(homeCastConfig.getIp() + "/mp4/",homeCastConfig.getIp() + "/images/", videosMapper.videoListToVideoDTOList(videosRepository.findAllBy().stream().sorted(Comparator.comparing((Video::getFileName))).collect(Collectors.toList())));
@@ -47,12 +51,13 @@ public class VideosService {
                     try {
                         String episodeNumber = fullEpisodeString[1];
                         return Integer.parseInt(episodeNumber);
-                    } catch (NumberFormatException e) {
-                        return CYBER_PAPAJ_2137;
+                    } catch (KremowkaException e) {
+                        logger.error(e.getMessage());
+                        return CYBER_POPE_2137;
                     }
 
                 }
-                return CYBER_PAPAJ_2137;
+                return CYBER_POPE_2137;
             })).toList();
             sortedList.addAll(lista);
         }
