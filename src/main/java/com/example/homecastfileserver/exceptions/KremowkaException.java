@@ -1,4 +1,4 @@
-﻿package com.example.homecastfileserver.exceptions;
+package com.example.homecastfileserver.exceptions;
 
 public class KremowkaException extends NumberFormatException{
     public KremowkaException(String janPawelDrugiMessage) {
