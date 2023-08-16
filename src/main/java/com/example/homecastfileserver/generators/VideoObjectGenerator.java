@@ -10,6 +10,9 @@ import com.example.homecastfileserver.generators.describegenerator.DescribeGener
 import com.example.homecastfileserver.generators.describegenerator.EmptyDescribeGenerator;
 import com.example.homecastfileserver.services.VideosService;
 import lombok.AllArgsConstructor;
+import org.jcodec.common.io.NIOUtils;
+import org.jcodec.containers.mp4.boxes.MovieBox;
+import org.jcodec.containers.mp4.demuxer.MP4Demuxer;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,11 +75,24 @@ public class VideoObjectGenerator {
             thumb = fileName.replace(".mp4", "") + "480x270.png";
             image480x270 = thumb;
             image780x1200 = "bbb.png";
-            duration = 100;
+            duration = getDurationOfVideo(homeCastConfig.getMp4dir() + fileName);
             source = new Source("videos/mp4", "mp4", fileName);
             videoList.add(new Video(fileName, episode, title, subtitle, thumb, image480x270, image780x1200, duration, source));
         }
         return videoList;
+    }
+
+    private static int getDurationOfVideo(String path){
+        File inputFile = new File(path);
+        long duration = 0;
+        try {
+            MP4Demuxer demuxer = MP4Demuxer.createMP4Demuxer(NIOUtils.readableChannel(inputFile));
+            MovieBox movieBox = demuxer.getMovie();
+            duration = movieBox.getDuration();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return (int) duration;
     }
 
     private DescribeGenerator getDescribeGenerator(){
