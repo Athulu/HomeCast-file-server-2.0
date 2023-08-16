@@ -18,4 +18,5 @@ public class VideoDTO {
     private String image780x1200;
     private Integer duration;
     private List<HashMap<String, String>> sources;
+
 }

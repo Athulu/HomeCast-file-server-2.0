@@ -62,7 +62,18 @@ public class VideosService {
             sortedList.addAll(lista);
         }
 
+        //podmiana milisekund na format hh:mm:ss
+//      sortedList.forEach(videoDTO -> videoDTO.setDuration(convertMillisecondsToTime(Integer.parseInt(videoDTO.getDuration()))));
+
         return UltimateDTO.create(homeCastConfig.getIp() + "/mp4/",homeCastConfig.getIp() + "/images/", sortedList);
+    }
+
+    private static String convertMillisecondsToTime(int milliseconds) {
+        int seconds = (milliseconds / 1000) % 60;
+        int minutes = (milliseconds / (1000 * 60)) % 60;
+        int hours = milliseconds / (1000 * 60 * 60);
+
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     public List<String> getVideosFileNames(){
