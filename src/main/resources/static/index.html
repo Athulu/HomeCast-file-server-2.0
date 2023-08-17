@@ -120,15 +120,32 @@
                 <hr/>
                 <div class="container">
                     <label><strong>ChatGPT API token</strong></label>
-                    <input type="text" placeholder="Wklej token..." name="token" required>
+                    <input type="text" placeholder="Wklej token..." name="token" id="tokenInput">
 
                     <label class="switch">
-                        <input type="checkbox" name="isActive">
+                        <input type="checkbox" name="isActive" id="isActiveCheckbox">
                         <span class="slider round"></span>
                     </label>
                 </div>
                 <button type="submit">Zapisz</button>
             </div>
         </form>
+
+        <script>
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/chatgpt", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        document.getElementById("tokenInput").value = data.token;
+                        document.getElementById("isActiveCheckbox").checked = data.istokenactive;
+                    } else {
+                        console.log("Błąd podczas pobierania danych z endpointu.");
+                    }
+                }
+            };
+            xhr.send();
+        </script>
     </body>
 </html>
