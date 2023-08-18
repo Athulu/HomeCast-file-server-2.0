@@ -14,7 +14,7 @@ Część projektu na androida znajduje się w tym repozytorium [HomeCast](https:
 ![HomeCast ustawienia](https://github.com/Athulu/HomeCast-file-server-2.0/assets/56313840/e89afbe1-2cbd-420f-80e8-f234af0f7390)
 
 ### O aplikacji
-Włączając filmy z komputera na telewizorze byłem za każdym razem zmuszony do jednej z tych 3 irytujących opcji:
+Włączając filmy z komputera na telewizorze byłem za każdym razem zmuszony do jednej z tych irytujących opcji:
 1. Strumieniować bezpośrednio na telewizor, ale za każdym razem, gdy było trzeba zatrzymać/zmienić film/przewinąć to byłem zmuszony iść do mojego pokoju.
 2. Przenosić laptopa do salonu razem z zasilaniem, aby podłączyć pod HDMI. Dalej byłem zmuszony wstawać z kanapy gdy chciałem zatrzymać lub zmienić film. Mniej chodzenia, ale więcej noszenia.
 
