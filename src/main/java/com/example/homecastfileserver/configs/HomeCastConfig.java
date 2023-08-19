@@ -1,5 +1,7 @@
 package com.example.homecastfileserver.configs;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -11,46 +13,14 @@ import java.util.regex.Pattern;
 
 @Configuration
 @ConfigurationProperties(prefix = "homecast")
+@Getter
+@Setter
 public class HomeCastConfig {
     private static final Logger logger = LoggerFactory.getLogger(HomeCastConfig.class);
     private String ip;
     private String homecastdir;
     private String imagesdir;
     private String mp4dir;
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-    public void setIpAdress() throws Exception {
-        this.ip = getAddressIP();
-    }
-
-    public String getHomecastdir() {
-        return homecastdir;
-    }
-    public void setHomecastdir(String homecastdir) {
-        this.homecastdir = homecastdir;
-    }
-
-    public String getImagesdir() {
-        return imagesdir;
-    }
-
-    public void setImagesdir(String imagesdir) {
-        this.imagesdir = imagesdir;
-    }
-
-    public String getMp4dir() {
-        return mp4dir;
-    }
-
-    public void setMp4dir(String mp4dir) {
-        this.mp4dir = mp4dir;
-    }
 
     private static String getAddressIP() throws Exception{
         Enumeration e = NetworkInterface.getNetworkInterfaces();
@@ -75,5 +45,9 @@ public class HomeCastConfig {
     public static boolean isPrivateClassCIPAddress(String ipAddress){
         String regex = "^192\\.168\\.[0-9]{1,3}\\.[0-9]{1,3}$";
         return Pattern.compile(regex).matcher(ipAddress).matches();
+    }
+
+    public void setIpAdress() throws Exception {
+        this.ip = getAddressIP();
     }
 }
