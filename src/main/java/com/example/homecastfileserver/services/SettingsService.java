@@ -13,7 +13,7 @@ public class SettingsService {
 
     public void setTokenChatGPT(String token, Boolean isActive){
         chatGPTConfig.setToken(token);
-        chatGPTConfig.setTokenActive(isActive);
+        chatGPTConfig.setIsTokenActive(isActive);
         initializeService.overrideJSONFile();
     }
 }

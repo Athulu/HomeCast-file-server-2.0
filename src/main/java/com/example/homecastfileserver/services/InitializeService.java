@@ -39,7 +39,7 @@ public class InitializeService {
 
     public void overrideJSONFile(){
         createChatGPTJsonFileIfNotExists();
-        ChatGPTConfigObject newDataObject = new ChatGPTConfigObject(chatGPTConfig.getToken(), chatGPTConfig.getTokenActive());
+        ChatGPTConfigObject newDataObject = new ChatGPTConfigObject(chatGPTConfig.getToken(), chatGPTConfig.getIsTokenActive());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             objectMapper.writeValue(new File(homeCastConfig.getHomecastdir() + "chatgpt.txt"), newDataObject);
@@ -88,7 +88,7 @@ public class InitializeService {
             FileReader reader = new FileReader(homeCastConfig.getHomecastdir() + "chatgpt.txt");
             ChatGPTConfig fromJson = gson.fromJson(reader, ChatGPTConfig.class);
             chatGPTConfig.setToken(fromJson.getToken());
-            chatGPTConfig.setTokenActive(fromJson.getTokenActive());
+            chatGPTConfig.setIsTokenActive(fromJson.getIsTokenActive());
             logger.info("Dane z pliku chatgpt.txt załadowane");
         } catch (IOException e) {
             logger.error("Nie udało się załadować danych z pliku chatgpt.txt");
